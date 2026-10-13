@@ -1,0 +1,548 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<style>html{color-scheme:light}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>ICAC 2027</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Kanit:wght@400;500;600;700&family=Sarabun:wght@400;500;600;700&display=swap">
+<style>
+/* Layout: stacked full-width colour bands (ICAC2027 design system) — blue hero band, white content bands, colour tiles, square corners, right-triangle motif */
+:root{
+  --surface-100:#ffffff; --surface-200:#f3f4f7; --ink:#1e1e1e; --ink-muted:#5c5f66;
+  --link:#1e477f; --accent-text:#c21c6f; --line:#8a8d94; --line-subtle:#e2e4e9;
+  --blue:#1e477f; --navy:#0b1f45; --magenta:#e8348e; --purple:#8b58a6; --purple-deep:#441052;
+  --teal:#13ae99; --gold:#d6a93c; --orange:#d83e26; --on-color:#ffffff; --charcoal:#1e1e1e;
+  --font-display:Kanit,"Noto Sans Thai",system-ui,sans-serif;
+  --font-sans:Sarabun,"Noto Sans Thai",system-ui,sans-serif;
+  --space-1:4px; --space-2:8px; --space-4:16px; --space-6:24px; --space-12:48px; --space-24:96px;
+  --shadow-card:0 8px 20px rgba(0,0,0,.18);
+  --wrap:1160px;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --surface-100:#1e1e1e; --surface-200:#2a2a2a; --ink:#ffffff; --ink-muted:#a8abb2;
+  --link:#7fa6e0; --accent-text:#f27ab4; --line:#6b6e75; --line-subtle:#3a3a3a; --charcoal:#141414;
+  --shadow-card:0 8px 20px rgba(0,0,0,.5); color-scheme:dark}}
+:root[data-theme="dark"]{
+  --surface-100:#1e1e1e; --surface-200:#2a2a2a; --ink:#ffffff; --ink-muted:#a8abb2;
+  --link:#7fa6e0; --accent-text:#f27ab4; --line:#6b6e75; --line-subtle:#3a3a3a; --charcoal:#141414;
+  --shadow-card:0 8px 20px rgba(0,0,0,.5); color-scheme:dark}
+
+*{box-sizing:border-box}
+body{background:var(--surface-100);color:var(--ink);font-family:var(--font-sans);font-size:16px;line-height:1.65}
+a{color:var(--link)}
+:focus-visible{outline:3px solid var(--magenta);outline-offset:2px}
+h1,h2,h3,h4{font-family:var(--font-display);margin:0;text-wrap:balance;line-height:1.2}
+p{margin:0}
+.wrap{max-width:var(--wrap);margin-inline:auto;padding-inline:var(--space-6)}
+@media (min-width:900px){.wrap{padding-inline:var(--space-12)}}
+
+/* header */
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--navy);color:var(--on-color)}
+.top .wrap{display:flex;align-items:center;gap:var(--space-4);min-height:64px}
+.brand{display:flex;align-items:baseline;gap:var(--space-2);color:var(--on-color);text-decoration:none;font-family:var(--font-display);white-space:nowrap}
+.brand b{font-size:24px;font-weight:700;letter-spacing:.01em}
+.brand span{font-size:13px;opacity:.8}
+.menu-btn{margin-left:auto;background:none;border:1px solid rgba(255,255,255,.5);color:var(--on-color);font:600 14px var(--font-display);padding:6px 14px;cursor:pointer}
+nav.main{display:none}
+nav.main a{color:var(--on-color);text-decoration:none;font-family:var(--font-display);font-size:15px;padding:var(--space-2) var(--space-2);white-space:nowrap;border-bottom:3px solid transparent}
+nav.main a[aria-current="page"]{border-bottom-color:var(--magenta)}
+nav.main a:hover{border-bottom-color:rgba(255,255,255,.5)}
+@media (min-width:1100px){.menu-btn{display:none}nav.main{display:flex;margin-left:auto;gap:var(--space-1)}}
+.drawer{background:var(--navy);border-top:1px solid rgba(255,255,255,.15)}
+.drawer a{display:block;color:var(--on-color);text-decoration:none;font-family:var(--font-display);padding:12px var(--space-6);border-bottom:1px solid rgba(255,255,255,.1)}
+.drawer a[aria-current="page"]{box-shadow:inset 4px 0 0 var(--magenta)}
+@media (min-width:1100px){.drawer{display:none!important}}
+
+/* bands */
+.band{padding-block:var(--space-12)}
+@media (min-width:900px){.band{padding-block:72px}}
+.band.alt{background:var(--surface-200)}
+.band.blue{background:linear-gradient(160deg,var(--blue),var(--navy));color:var(--on-color);position:relative;overflow:hidden}
+.band.dark{background:var(--charcoal);color:#fff}
+.band.dark .muted{color:#b9bcc3}
+
+/* triangles */
+.tri{position:absolute;width:0;height:0;pointer-events:none}
+.tri.br{right:0;bottom:0;border-left:72px solid transparent;border-bottom:72px solid var(--surface-100)}
+.tri.br2{right:72px;bottom:0;border-right:72px solid transparent;border-top:72px solid rgba(255,255,255,.18)}
+.tri.tl{left:0;top:0;border-right:56px solid transparent;border-top:56px solid rgba(255,255,255,.12)}
+
+/* section heading lockup */
+.head{display:grid;gap:var(--space-4);margin-bottom:var(--space-6)}
+@media (min-width:900px){.head.split{grid-template-columns:minmax(0,1fr) minmax(0,1fr);align-items:end;gap:var(--space-12)}}
+.lock{display:flex;flex-wrap:wrap;align-items:baseline;column-gap:12px}
+.lock .b{font-size:clamp(28px,4.4vw,40px);font-weight:700}
+.lock .l{font-size:clamp(20px,3vw,28px);font-weight:500}
+.muted{color:var(--ink-muted)}
+.desc{font-size:15px;max-width:62ch}
+
+/* buttons: bar with triangle end */
+.btn{position:relative;display:inline-flex;align-items:center;gap:var(--space-2);min-height:44px;padding:10px 52px 10px 18px;font:600 15px/1.3 var(--font-display);text-decoration:none;border:0;cursor:pointer;background:var(--blue);color:var(--on-color)}
+.btn::after{content:"";position:absolute;right:0;top:0;bottom:0;width:34px;background:var(--magenta);clip-path:polygon(100% 0,100% 100%,0 100%)}
+.btn.light{background:#fff;color:#1e1e1e}
+.btn.teal::after{background:var(--teal)}
+.btn:hover{filter:brightness(1.08)}
+.btn[aria-disabled="true"]{background:var(--surface-200);color:var(--ink-muted);cursor:not-allowed;filter:none}
+.btn[aria-disabled="true"]::after{background:var(--line)}
+.band.blue .btn[aria-disabled="true"],.band.dark .btn[aria-disabled="true"]{background:rgba(255,255,255,.12);color:#d6dae3}
+.soon{display:block;font:500 12px var(--font-sans);opacity:.85}
+.btns{display:flex;flex-wrap:wrap;gap:var(--space-4)}
+
+/* hero */
+.hero{padding-block:56px 88px}
+@media (min-width:900px){.hero{padding-block:80px 120px}}
+.hero-grid{display:grid;gap:var(--space-12)}
+@media (min-width:980px){.hero-grid{grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);align-items:end}}
+.presents{font-size:15px;opacity:.9;max-width:60ch}
+.hero h1{margin-top:var(--space-4);font-size:clamp(56px,11vw,112px);line-height:.92;font-weight:700;letter-spacing:-.01em}
+.hero h1 small{display:block;font-size:clamp(18px,2.4vw,24px);font-weight:500;letter-spacing:0;margin-top:var(--space-2)}
+.th-name{margin-top:var(--space-4);font:500 clamp(17px,2vw,20px)/1.5 var(--font-display);max-width:44ch}
+.theme{margin-top:var(--space-6);padding-left:var(--space-4);border-left:4px solid var(--gold);font:500 clamp(18px,2.2vw,22px)/1.5 var(--font-display);max-width:40ch}
+.meta{margin-top:var(--space-6);display:flex;flex-wrap:wrap;gap:var(--space-2) var(--space-6);font-size:15px}
+.meta b{font-family:var(--font-display);font-weight:600;color:var(--gold)}
+.hero .btns{margin-top:var(--space-6)}
+
+/* countdown */
+.count{background:rgba(11,31,69,.55);padding:var(--space-6);border-top:4px solid var(--magenta)}
+.count h2{font-size:15px;font-weight:500;letter-spacing:.04em}
+.cd{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:2px;margin-top:var(--space-4)}
+.cd div{background:rgba(255,255,255,.08);padding:var(--space-4) var(--space-2);text-align:center}
+.cd b{display:block;font:600 clamp(36px,6vw,52px)/1 var(--font-display);font-variant-numeric:tabular-nums}
+.cd span{font-size:13px;opacity:.85}
+.count p{margin-top:var(--space-4);font-size:13px;opacity:.85}
+
+/* colour tiles */
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr))}
+.tile{position:relative;padding:var(--space-6);min-height:210px;display:flex;flex-direction:column;gap:var(--space-2);color:var(--on-color);text-decoration:none;overflow:hidden}
+.tile .num{font:500 48px/1 var(--font-display);font-variant-numeric:tabular-nums}
+.tile h3{font-size:20px;font-weight:600}
+.tile p{font-size:14px;line-height:1.55}
+.tile .when{margin-top:auto;font:600 14px var(--font-display)}
+.tile.m{background:#c21c6f}
+.tile.p{background:var(--purple)}
+.tile.t{background:var(--teal);color:#1e1e1e}
+.tile.g{background:var(--gold);color:#1e1e1e}
+.tile.o{background:var(--orange)}
+.tile.b{background:var(--blue)}
+.tile.d{background:var(--purple-deep)}
+a.tile::after{content:"";position:absolute;right:0;bottom:0;border-left:36px solid transparent;border-bottom:36px solid rgba(255,255,255,.55);transition:border-width .15s}
+a.tile:hover::after{border-left-width:48px;border-bottom-width:48px}
+.tile svg{width:32px;height:32px;stroke:currentColor;fill:none;stroke-width:1.8}
+
+/* news */
+.news{display:grid;gap:0;border-top:1px solid var(--line-subtle)}
+.empty{padding:var(--space-6);background:var(--surface-200);display:flex;gap:var(--space-4);align-items:flex-start}
+.empty svg{flex:none;width:28px;height:28px;stroke:var(--accent-text);fill:none;stroke-width:1.8}
+.empty b{font-family:var(--font-display);font-weight:600}
+
+/* generic content */
+.grid2{display:grid;gap:var(--space-6)}
+@media (min-width:860px){.grid2{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.grid3{display:grid;gap:var(--space-6)}
+@media (min-width:860px){.grid3{grid-template-columns:repeat(3,minmax(0,1fr))}}
+.card{background:var(--surface-100);border:1px solid var(--line-subtle);padding:var(--space-6);display:flex;flex-direction:column;gap:var(--space-4);min-width:0}
+.band.alt .card{border-color:transparent}
+.card h3{font-size:20px;font-weight:600}
+.eyebrow{font:600 13px var(--font-display);letter-spacing:.06em;text-transform:uppercase;color:var(--accent-text)}
+.lead{font-size:18px;line-height:1.75;max-width:68ch}
+ul.list{margin:0;padding:0;list-style:none;display:grid;gap:var(--space-2)}
+ul.list li{position:relative;padding-left:22px}
+ul.list li::before{content:"";position:absolute;left:0;top:.55em;border-left:10px solid var(--magenta);border-top:5px solid transparent;border-bottom:5px solid transparent}
+.obj{display:grid;gap:0;counter-reset:o}
+.obj li{list-style:none;display:grid;grid-template-columns:56px minmax(0,1fr);gap:var(--space-4);padding-block:var(--space-4);border-bottom:1px solid var(--line-subtle);align-items:baseline}
+.obj li::before{counter-increment:o;content:"0" counter(o);font:500 32px/1 var(--font-display);color:var(--accent-text)}
+.obj{margin:0;padding:0}
+
+.pending{border:1px dashed var(--line);padding:var(--space-6);display:flex;flex-direction:column;gap:var(--space-4);align-items:flex-start}
+.pending b{font-family:var(--font-display);font-weight:600}
+
+/* competitions */
+.comp{display:grid;gap:0}
+@media (min-width:900px){.comp{grid-template-columns:280px minmax(0,1fr)}}
+.comp .side{padding:var(--space-6);color:#fff;display:flex;flex-direction:column;gap:var(--space-2);position:relative;min-height:180px}
+.comp .side .num{font:500 56px/1 var(--font-display)}
+.comp .side h3{font-size:24px;font-weight:600}
+.comp .body{background:var(--surface-100);padding:var(--space-6);display:grid;gap:var(--space-6);min-width:0}
+.comp + .comp{margin-top:var(--space-6)}
+.steps{display:grid;gap:var(--space-4)}
+@media (min-width:700px){.steps{grid-template-columns:repeat(3,minmax(0,1fr))}}
+.step h4{font-size:15px;font-weight:600;margin-bottom:var(--space-2)}
+
+/* certificates */
+.cert{display:grid;grid-template-columns:8px minmax(0,1fr);background:var(--surface-100);border:1px solid var(--line-subtle)}
+.cert .bar{background:var(--c)}
+.cert .in{padding:var(--space-6);display:flex;flex-direction:column;gap:var(--space-4)}
+.tips{font-size:14px}
+
+/* schedule */
+.day{display:grid;gap:var(--space-4)}
+@media (min-width:860px){.day{grid-template-columns:200px minmax(0,1fr);gap:var(--space-12)}}
+.day + .day{margin-top:var(--space-12)}
+.day .label{font-family:var(--font-display)}
+.day .label b{display:block;font-size:40px;font-weight:600;line-height:1;color:var(--accent-text)}
+.day .label span{font-size:15px}
+.slots{margin:0;padding:0;list-style:none;border-top:2px solid var(--ink)}
+.slots li{display:grid;grid-template-columns:minmax(0,130px) minmax(0,1fr);gap:var(--space-4);padding-block:var(--space-4);border-bottom:1px solid var(--line-subtle)}
+.slots time{font:600 15px var(--font-display);font-variant-numeric:tabular-nums}
+@media (max-width:520px){.slots li{grid-template-columns:1fr;gap:var(--space-1)}}
+
+/* contact */
+.contact{display:grid;gap:var(--space-4);padding:var(--space-6);background:var(--surface-100);border-top:4px solid var(--c);min-width:0}
+.contact h3{font-size:18px;font-weight:600}
+dl.kv{display:grid;grid-template-columns:auto minmax(0,1fr);gap:var(--space-1) var(--space-4);margin:0;font-size:15px}
+dl.kv dt{color:var(--ink-muted)}
+dl.kv dd{margin:0;overflow-wrap:anywhere}
+.copy{background:none;border:1px solid var(--line);color:var(--ink);font:500 12px var(--font-sans);padding:2px 8px;margin-left:var(--space-2);cursor:pointer}
+.tba{color:var(--ink-muted);font-style:italic}
+
+footer{background:var(--charcoal);color:#e9eaee;padding-block:var(--space-12);position:relative;overflow:hidden}
+footer .wrap{display:grid;gap:var(--space-6)}
+@media (min-width:860px){footer .wrap{grid-template-columns:minmax(0,1.4fr) minmax(0,1fr)}}
+footer b{font-family:var(--font-display)}
+footer .small{font-size:14px;color:#b9bcc3}
+footer nav{display:flex;flex-wrap:wrap;gap:var(--space-2) var(--space-4)}
+footer nav a{color:#fff;font-size:14px}
+.pin{position:absolute;right:0;top:0;border-left:64px solid transparent;border-top:64px solid var(--magenta)}
+
+.page[hidden]{display:none!important}
+@media (prefers-reduced-motion:no-preference){.page{animation:in .35s ease-out}@keyframes in{from{transform:translateY(8px)}to{transform:none}}}
+</style>
+</head>
+<body>
+
+
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="#home"><b>ICAC 2027</b><span>ครั้งที่ 16</span></a>
+    <nav class="main" aria-label="เมนูหลัก" id="nav"></nav>
+    <button class="menu-btn" id="menuBtn" aria-expanded="false" aria-controls="drawer">เมนู</button>
+  </div>
+  <div class="drawer" id="drawer" hidden></div>
+</header>
+
+<main>
+<!-- ================= HOME ================= -->
+<div class="page" data-page="home">
+  <section class="band blue hero">
+    <span class="tri tl"></span><span class="tri br2"></span><span class="tri br"></span>
+    <div class="wrap hero-grid">
+      <div>
+        <p class="presents">เครือข่ายศิลปวัฒนธรรมมหาวิทยาลัยแห่งประเทศไทย และมหาวิทยาลัยราชภัฏกำแพงเพชร (KPRU) ภูมิใจเสนอ</p>
+        <h1>ICAC 2027<small>The 16th International Conference on Arts and Culture</small></h1>
+        <p class="th-name">งานประชุมวิชาการระดับชาติและนานาชาติ ครั้งที่ 16 เครือข่ายศิลปวัฒนธรรมมหาวิทยาลัยแห่งประเทศไทย</p>
+        <p class="theme">“ภูมิทัศน์วัฒนธรรมพื้นถิ่นขับเคลื่อนซอฟต์พาวเวอร์ไทยสู่เศรษฐกิจสร้างสรรค์”</p>
+        <div class="meta"><span><b>24–26 กุมภาพันธ์ 2570</b></span><span>หอประชุมทีปังกรรัศมีโชติ มหาวิทยาลัยราชภัฏกำแพงเพชร</span></div>
+        <div class="btns">
+          <a class="btn light" href="#academic">ส่งบทความวิชาการ (Poster)</a>
+          <a class="btn light teal" href="#competitions">สมัครแข่งขันทักษะทางวัฒนธรรม</a>
+        </div>
+      </div>
+      <div class="count" aria-live="polite">
+        <h2>นับถอยหลังสู่วันงาน · COUNTDOWN</h2>
+        <div class="cd"><div><b id="cdD">--</b><span>วัน</span></div><div><b id="cdH">--</b><span>ชั่วโมง</span></div><div><b id="cdM">--</b><span>นาที</span></div></div>
+        <p>เริ่มงาน 24 กุมภาพันธ์ 2570 เวลา 08:30 น.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="band">
+    <div class="wrap">
+      <div class="head split">
+        <h2 class="lock"><span class="b">กำหนดการสำคัญ</span><span class="l">Important Dates</span></h2>
+        <p class="desc muted">วันที่ของแต่ละขั้นตอนจะประกาศเร็วๆ นี้ ติดตามได้จากหน้านี้และข่าวประชาสัมพันธ์</p>
+      </div>
+    </div>
+    <div class="tiles" id="dates"></div>
+  </section>
+
+  <section class="band alt">
+    <div class="wrap">
+      <div class="head split">
+        <h2 class="lock"><span class="b">ข่าวประชาสัมพันธ์</span><span class="l">News &amp; Announcements</span></h2>
+        <p class="desc muted">ประกาศเร่งด่วนและข่าวล่าสุดจากผู้จัด เช่น การขยายเวลาส่งบทความ หรือการเพิ่มห้องประชุม</p>
+      </div>
+      <div class="news" id="news"></div>
+    </div>
+  </section>
+
+  <section class="band">
+    <div class="wrap">
+      <div class="head"><h2 class="lock"><span class="b">ลิงก์ด่วน</span><span class="l">Quick Links</span></h2></div>
+    </div>
+    <div class="tiles">
+      <a class="tile m" href="#academic"><svg viewBox="0 0 24 24"><path d="M6 3h9l4 4v14H6z"/><path d="M14 3v5h5M9 13h7M9 17h7"/></svg><h3>ส่งบทความวิชาการ (Poster)</h3><p>ขอบเขตบทความ เทมเพลต และลิงก์ส่งผลงาน</p></a>
+      <a class="tile p" href="#competitions"><svg viewBox="0 0 24 24"><path d="M12 3a3 3 0 0 1 3 3v5a3 3 0 0 1-6 0V6a3 3 0 0 1 3-3z"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg><h3>สมัครประกวดมารยาทไทย / สวดมนต์หมู่ฯ</h3><p>เกณฑ์การแข่งขันและลิงก์สมัคร</p></a>
+      <a class="tile t" href="#academic-list"><svg viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg><h3>ตรวจสอบรายชื่อผู้เข้าร่วม</h3><p>ประกาศรายชื่อผ่าน Looker Studio</p></a>
+      <a class="tile g" href="#certificates"><svg viewBox="0 0 24 24"><circle cx="12" cy="9" r="5"/><path d="M9 13.5 7.5 21l4.5-2.5 4.5 2.5-1.5-7.5"/></svg><h3>ดาวน์โหลดเกียรติบัตร</h3><p>ระบบเกียรติบัตร KPRU แยกตามหมวดหมู่</p></a>
+    </div>
+  </section>
+</div>
+
+<!-- ================= ABOUT ================= -->
+<div class="page" data-page="about" hidden>
+  <section class="band blue"><span class="tri br"></span>
+    <div class="wrap"><p class="eyebrow" style="color:var(--gold)">About ICAC 2027</p>
+      <h1 class="lock" style="margin-top:8px"><span class="b">เกี่ยวกับงาน</span><span class="l">ประชุมวิชาการ ICAC 2027</span></h1>
+    </div>
+  </section>
+  <section class="band">
+    <div class="wrap">
+      <p class="lead">งานประชุมวิชาการระดับชาติและนานาชาติ ครั้งที่ 16 (The 16th International Conference on Arts and Culture: ICAC 2027) เป็นเวทีสำคัญในการแลกเปลี่ยนเรียนรู้ องค์ความรู้ ผลงานวิจัย และนวัตกรรมด้านศิลปวัฒนธรรม เพื่อสืบสาน ทำนุบำรุง และต่อยอดมรดกทางวัฒนธรรมอันทรงคุณค่าให้ก้าวทันยุคสมัย พร้อมทั้งเสริมสร้างเครือข่ายความร่วมมือทางวิชาการและวัฒนธรรมระหว่างสถาบันอุดมศึกษาทั้งในและต่างประเทศ</p>
+    </div>
+  </section>
+  <section class="band alt">
+    <div class="wrap grid2">
+      <article class="card"><p class="eyebrow">Network Background</p><h3>ความเป็นมาของเครือข่ายศิลปวัฒนธรรมมหาวิทยาลัยแห่งประเทศไทย</h3>
+        <p>เครือข่ายเกิดจากการรวมตัวของมหาวิทยาลัยสมาชิกทั่วประเทศ ที่มีเจตนารมณ์ร่วมกันในการขับเคลื่อนงานด้านศิลปวัฒนธรรมให้เป็นเสาหลักในการพัฒนาสังคมและประเทศชาติ</p></article>
+      <article class="card"><p class="eyebrow">Host Institution</p><h3>เจ้าภาพหลัก: มหาวิทยาลัยราชภัฏกำแพงเพชร (KPRU)</h3>
+        <p>มหาวิทยาลัยราชภัฏกำแพงเพชรเป็นเจ้าภาพและสถานที่จัดงานในปีนี้ พร้อมต้อนรับคณาจารย์ นักวิชาการ นิสิต นักศึกษา และผู้สนใจจากทั่วประเทศและนานาชาติ สู่จังหวัดกำแพงเพชร เมืองมรดกโลกทางวัฒนธรรม</p></article>
+    </div>
+  </section>
+  <section class="band">
+    <div class="wrap">
+      <div class="head"><h2 class="lock"><span class="b">วัตถุประสงค์</span><span class="l">Objectives</span></h2></div>
+      <ol class="obj">
+        <li><span>เพื่อเป็นเวทีเผยแพร่ผลงานวิจัย งานสร้างสรรค์ และบทความวิชาการด้านศิลปวัฒนธรรม</span></li>
+        <li><span>เพื่อส่งเสริมและเปิดโอกาสให้นิสิต นักศึกษา ได้แสดงออกถึงความสามารถและทักษะทางศิลปวัฒนธรรมผ่านการแข่งขัน</span></li>
+        <li><span>เพื่อสร้างเครือข่ายความร่วมมือทางวิชาการและการแลกเปลี่ยนเรียนรู้ระดับชาติและนานาชาติ</span></li>
+      </ol>
+    </div>
+  </section>
+</div>
+
+<!-- ================= ACADEMIC ================= -->
+<div class="page" data-page="academic" hidden>
+  <section class="band blue"><span class="tri br"></span>
+    <div class="wrap"><p class="eyebrow" style="color:var(--gold)">Academic Conference · Poster Presentation</p>
+      <h1 class="lock" style="margin-top:8px"><span class="b">การประชุมวิชาการ</span><span class="l">ระดับชาติและนานาชาติ ด้านศิลปวัฒนธรรม</span></h1>
+      <p style="margin-top:16px;max-width:66ch;opacity:.92">เปิดรับบทความวิชาการและบทความวิจัยจากคณาจารย์ นักวิจัย นักศึกษา และผู้สนใจ เพื่อนำเสนอผลงานในรูปแบบโปสเตอร์ (Poster Presentation) แลกเปลี่ยนองค์ความรู้และนวัตกรรมด้านศิลปวัฒนธรรม</p>
+    </div>
+  </section>
+  <section class="band">
+    <div class="wrap"><div class="head split"><h2 class="lock"><span class="b">ขอบเขตบทความ</span><span class="l">Call for Papers</span></h2><p class="desc muted">ประเด็นที่เปิดรับบทความ</p></div></div>
+    <div class="tiles">
+      <div class="tile b"><span class="num">A</span><h3>ศิลปกรรม ดนตรี นาฏศิลป์ และการแสดง</h3></div>
+      <div class="tile d"><span class="num">B</span><h3>ประวัติศาสตร์ โบราณคดี ภาษา และวรรณกรรม</h3></div>
+      <div class="tile t"><span class="num">C</span><h3>ภูมิปัญญาท้องถิ่น ชาติพันธุ์วิทยา และวัฒนธรรมศึกษา</h3></div>
+      <div class="tile g"><span class="num">D</span><h3>การสืบสาน ทำนุบำรุง และการต่อยอดเศรษฐกิจสร้างสรรค์ (Creative Economy) จากทุนทางวัฒนธรรม</h3></div>
+    </div>
+  </section>
+  <section class="band alt">
+    <div class="wrap grid2">
+      <article class="card"><p class="eyebrow">Guidelines &amp; Templates</p><h3>เอกสารและเทมเพลต</h3><p class="muted">ดาวน์โหลดรูปแบบการจัดทำบทความและรูปแบบโปสเตอร์</p>
+        <div class="btns"><span data-link="articleTemplate">ดาวน์โหลดรูปแบบบทความวิชาการ (Word / PDF)</span><span data-link="posterTemplate">ดาวน์โหลดเทมเพลตโปสเตอร์ (Poster Template)</span></div></article>
+      <article class="card"><p class="eyebrow">Submission</p><h3>สมัครและส่งผลงาน</h3><p class="muted">กรอกข้อมูล อัปโหลดไฟล์บทความ และชำระเงินผ่าน Google Form</p>
+        <div class="btns"><span data-link="paperForm">ส่งบทความวิชาการผ่าน Google Form</span></div></article>
+    </div>
+  </section>
+  <section class="band" id="academic-list-anchor">
+    <div class="wrap">
+      <div class="head split"><h2 class="lock"><span class="b">ประกาศรายชื่อ</span><span class="l">Accepted Papers</span></h2><p class="desc muted">ตรวจสอบรายชื่อผู้ผ่านการพิจารณาและมีสิทธิ์นำเสนอผลงานบทความวิชาการ แบบเรียลไทม์ผ่าน Looker Studio</p></div>
+      <div class="pending"><b>รายชื่อผู้มีสิทธิ์นำเสนอผลงาน</b><span class="muted">รายชื่อเปิดดูได้ใน Looker Studio (เปิดในแท็บใหม่)</span><span data-link="paperList">เปิดรายชื่อใน Looker Studio</span></div>
+    </div>
+  </section>
+</div>
+
+<!-- ================= COMPETITIONS ================= -->
+<div class="page" data-page="competitions" hidden>
+  <section class="band blue"><span class="tri br"></span>
+    <div class="wrap"><p class="eyebrow" style="color:var(--gold)">Cultural Competitions</p>
+      <h1 class="lock" style="margin-top:8px"><span class="b">การแข่งขันทักษะทางศิลปวัฒนธรรม</span><span class="l">งาน ICAC 2027</span></h1>
+      <p style="margin-top:16px;max-width:66ch;opacity:.92">เวทีแสดงออกถึงความภาคภูมิใจในเอกลักษณ์ไทยและการสืบสานภูมิปัญญา ผ่านการประกวดทักษะทางวัฒนธรรมสำหรับเยาวชนและนิสิตนักศึกษา</p>
+    </div>
+  </section>
+  <section class="band alt">
+    <div class="wrap">
+      <article class="comp">
+        <div class="side" style="background:var(--purple)"><span class="num">01</span><h3>การประกวดมารยาทไทย</h3><span>Thai Etiquette Competition · ระดับชาติ</span></div>
+        <div class="body">
+          <div class="steps">
+            <div class="step"><h4>รายละเอียดการแข่งขัน</h4><ul class="list"><li>ขอบเขต รูปแบบ และขั้นตอนการปฏิบัติ เช่น การกราบ การไหว้ การนั่ง การยืน และการเดิน</li><li>คุณสมบัติของผู้เข้าแข่งขันและจำนวนสมาชิกในทีม</li></ul></div>
+            <div class="step"><h4>เอกสารและเกณฑ์การตัดสิน</h4><span data-link="etiquetteRules">ดาวน์โหลดเกณฑ์การให้คะแนน (PDF)</span></div>
+            <div class="step"><h4>สมัครเข้าประกวด</h4><span data-link="etiquetteForm">สมัครผ่าน Google Form</span></div>
+          </div>
+          <div class="pending"><b>ประกาศรายชื่อผู้มีสิทธิ์เข้าแข่งขัน</b><span class="muted">รายชื่อผู้สมัครและผู้มีสิทธิ์แข่งขันประกวดมารยาทไทย ใน Looker Studio</span><span data-link="etiquetteList">เปิดรายชื่อใน Looker Studio</span></div>
+        </div>
+      </article>
+      <article class="comp">
+        <div class="side" style="background:var(--orange)"><span class="num">02</span><h3>การประกวดการสวดมนต์หมู่ทำนองสรภัญญะ</h3><span>Chanting Competition</span></div>
+        <div class="body">
+          <div class="steps">
+            <div class="step"><h4>รายละเอียดการแข่งขัน</h4><ul class="list"><li>บทสวดบังคับและบทสวดสรรเสริญพระรัตนตรัยที่ใช้ในการประกวด</li><li>เกณฑ์จังหวะ ทำนอง และความพร้อมเพรียง</li></ul></div>
+            <div class="step"><h4>เอกสารและบทสวด</h4><span data-link="chantRules">ดาวน์โหลดคู่มือ บทสวด และเกณฑ์ (PDF)</span></div>
+            <div class="step"><h4>สมัครเข้าประกวด</h4><span data-link="chantForm">สมัครผ่าน Google Form</span></div>
+          </div>
+          <div class="pending"><b>ประกาศรายชื่อผู้มีสิทธิ์เข้าแข่งขัน</b><span class="muted">รายชื่อผู้สมัครและผู้มีสิทธิ์แข่งขันสวดมนต์หมู่ทำนองสรภัญญะ ใน Looker Studio</span><span data-link="chantList">เปิดรายชื่อใน Looker Studio</span></div>
+        </div>
+      </article>
+    </div>
+  </section>
+</div>
+
+<!-- ================= CERTIFICATES ================= -->
+<div class="page" data-page="certificates" hidden>
+  <section class="band blue"><span class="tri br"></span>
+    <div class="wrap"><p class="eyebrow" style="color:var(--gold)">Certificate Download</p>
+      <h1 class="lock" style="margin-top:8px"><span class="b">ดาวน์โหลดเกียรติบัตร</span><span class="l">ระบบ KPRU</span></h1>
+      <p style="margin-top:16px;max-width:66ch;opacity:.92">ผู้เข้าร่วมงานประชุมวิชาการ ผู้นำเสนอผลงาน และผู้เข้าแข่งขันทักษะทางศิลปวัฒนธรรม งาน ICAC 2027 ค้นหาและดาวน์โหลดเกียรติบัตรผ่านระบบออนไลน์ของมหาวิทยาลัยราชภัฏกำแพงเพชร ตามหมวดหมู่ด้านล่าง</p>
+    </div>
+  </section>
+  <section class="band alt">
+    <div class="wrap">
+      <div class="grid2">
+        <article class="cert" style="--c:var(--magenta)"><span class="bar"></span><div class="in"><h3 style="font-size:19px">เกียรติบัตรการนำเสนอบทความวิชาการ (Poster Presentation)</h3><p class="muted">สำหรับผู้นำเสนอผลงานวิชาการและวิจัยรูปแบบโปสเตอร์</p><span data-link="certPoster">ไปยังระบบเกียรติบัตร KPRU</span></div></article>
+        <article class="cert" style="--c:var(--purple)"><span class="bar"></span><div class="in"><h3 style="font-size:19px">เกียรติบัตรการประกวดมารยาทไทย</h3><p class="muted">สำหรับผู้เข้าร่วมการประกวดมารยาทไทยและอาจารย์ผู้ควบคุมทีม</p><span data-link="certEtiquette">ไปยังระบบเกียรติบัตร KPRU</span></div></article>
+        <article class="cert" style="--c:var(--orange)"><span class="bar"></span><div class="in"><h3 style="font-size:19px">เกียรติบัตรการประกวดการสวดมนต์หมู่ทำนองสรภัญญะ</h3><p class="muted">สำหรับผู้เข้าร่วมการประกวดสวดมนต์หมู่ฯ และอาจารย์ผู้ควบคุมทีม</p><span data-link="certChant">ไปยังระบบเกียรติบัตร KPRU</span></div></article>
+        <article class="cert" style="--c:var(--teal)"><span class="bar"></span><div class="in"><h3 style="font-size:19px">เกียรติบัตรผู้เข้าร่วมงานทั่วไป (General Participants)</h3><p class="muted">สำหรับผู้เข้าร่วมงาน คณาจารย์ และผู้สนใจทั่วไปที่ลงทะเบียนเข้าร่วมงาน</p><span data-link="certGeneral">ไปยังระบบเกียรติบัตร KPRU</span></div></article>
+      </div>
+      <ul class="list tips muted" style="margin-top:32px">
+        <li>กรุณากรอกเลขประจำตัวประชาชน หรือชื่อ-นามสกุลจริง เพื่อค้นหาเกียรติบัตรของท่านในระบบ KPRU</li>
+        <li>หากพบปัญหาในการดาวน์โหลดเกียรติบัตร ติดต่อทีมงานได้ที่หน้า <a href="#contact">ติดต่อเรา</a></li>
+      </ul>
+    </div>
+  </section>
+</div>
+
+<!-- ================= SCHEDULE ================= -->
+<div class="page" data-page="schedule" hidden>
+  <section class="band blue"><span class="tri br"></span>
+    <div class="wrap"><p class="eyebrow" style="color:var(--gold)">Schedule &amp; Venue</p>
+      <h1 class="lock" style="margin-top:8px"><span class="b">กำหนดการและสถานที่</span><span class="l">ICAC 2027</span></h1>
+      <p style="margin-top:16px;max-width:66ch;opacity:.92">กำหนดการเบื้องต้นของงาน ระหว่างวันที่ 24–26 กุมภาพันธ์ 2570 (อาจมีการปรับเปลี่ยนตามความเหมาะสม)</p>
+    </div>
+  </section>
+  <section class="band">
+    <div class="wrap">
+      <div class="day">
+        <div class="label"><b>วันที่ 1</b><span>วันแรกของการจัดงาน</span></div>
+        <ul class="slots">
+          <li><time>08:30–09:30 น.</time><span>ลงทะเบียนผู้เข้าร่วมงาน / เยี่ยมชมนิทรรศการ</span></li>
+          <li><time>09:30–10:30 น.</time><span>พิธีเปิดงานประชุมวิชาการระดับชาติและนานาชาติ ครั้งที่ 16 (ICAC 2027) โดยอธิการบดี / ประธานในพิธี</span></li>
+          <li><time>10:30–12:00 น.</time><span>การบรรยายพิเศษ (Keynote Speech) จากผู้ทรงคุณวุฒิ</span></li>
+          <li><time>13:00–16:00 น.</time><span>การนำเสนอผลงานวิชาการรูปแบบโปสเตอร์ (Poster Presentation) และการแข่งขันทักษะทางศิลปวัฒนธรรม (รอบคัดเลือก / รอบชิงชนะเลิศ)</span></li>
+        </ul>
+      </div>
+      <div class="day">
+        <div class="label"><b>วันที่ 2</b><span>วันที่สอง</span></div>
+        <ul class="slots">
+          <li><time>09:00–12:00 น.</time><span>กิจกรรมเสวนาทางวิชาการ / การแสดงศิลปวัฒนธรรมแลกเปลี่ยน</span></li>
+          <li><time>13:00–15:00 น.</time><span>พิธีมอบรางวัลแก่ผู้ชนะการแข่งขันและผู้นำเสนอผลงาน / พิธีปิดงาน</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+  <section class="band alt">
+    <div class="wrap">
+      <div class="head"><h2 class="lock"><span class="b">สถานที่จัดงาน</span><span class="l">Venue</span></h2></div>
+      <div class="grid3">
+        <article class="card"><p class="eyebrow">สถานที่</p><h3>มหาวิทยาลัยราชภัฏกำแพงเพชร</h3><p class="muted">Kamphaeng Phet Rajabhat University (KPRU)<br>หอประชุมทีปังกรรัศมีโชติ</p><p>เลขที่ 69 ถนนนครชุม อำเภอเมือง จังหวัดกำแพงเพชร 62000</p>
+          <div class="btns"><a class="btn" href="https://www.google.com/maps/search/?api=1&amp;query=%E0%B8%A1%E0%B8%AB%E0%B8%B2%E0%B8%A7%E0%B8%B4%E0%B8%97%E0%B8%A2%E0%B8%B2%E0%B8%A5%E0%B8%B1%E0%B8%A2%E0%B8%A3%E0%B8%B2%E0%B8%8A%E0%B8%A0%E0%B8%B1%E0%B8%8F%E0%B8%81%E0%B8%B3%E0%B9%81%E0%B8%9E%E0%B8%87%E0%B9%80%E0%B8%9E%E0%B8%8A%E0%B8%A3" target="_blank" rel="noopener">เปิดแผนที่ Google Maps</a></div></article>
+        <article class="card"><p class="eyebrow">การเดินทาง</p><h3>Map &amp; Directions</h3><p class="muted">ข้อมูลการเดินทางจากสถานีขนส่ง / สนามบินใกล้เคียง และเส้นทางขับรถยนต์ส่วนตัวมายังมหาวิทยาลัย จะประกาศเร็วๆ นี้</p></article>
+        <article class="card"><p class="eyebrow">ที่พัก</p><h3>โรงแรมและที่พักแนะนำ</h3><p class="muted">รายชื่อโรงแรมพันธมิตรและโรงแรมใกล้มหาวิทยาลัย พร้อมเบอร์โทรศัพท์ติดต่อ สำหรับผู้เดินทางจากต่างจังหวัดและต่างประเทศ จะประกาศเร็วๆ นี้</p></article>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ================= CONTACT ================= -->
+<div class="page" data-page="contact" hidden>
+  <section class="band blue"><span class="tri br"></span>
+    <div class="wrap"><p class="eyebrow" style="color:var(--gold)">Contact Us</p>
+      <h1 class="lock" style="margin-top:8px"><span class="b">ติดต่อเรา</span><span class="l">คณะทำงาน ICAC 2027</span></h1>
+      <p style="margin-top:16px;max-width:66ch;opacity:.92">หากมีข้อสงสัยเกี่ยวกับการส่งบทความวิชาการ การสมัครแข่งขันทักษะทางศิลปวัฒนธรรม หรือปัญหาการใช้งานระบบ ติดต่อคณะทำงานได้ตามช่องทางด้านล่าง</p>
+    </div>
+  </section>
+  <section class="band alt">
+    <div class="wrap">
+      <div class="grid2" style="margin-bottom:24px">
+        <article class="card"><p class="eyebrow">Host Organization</p><h3>เครือข่ายศิลปวัฒนธรรมมหาวิทยาลัยแห่งประเทศไทย และมหาวิทยาลัยราชภัฏกำแพงเพชร (KPRU)</h3><p>เลขที่ 69 ถนนนครชุม อำเภอเมือง จังหวัดกำแพงเพชร 62000</p></article>
+        <article class="card"><p class="eyebrow">Social Media &amp; Location</p>
+          <dl class="kv"><dt>โทรศัพท์กลาง</dt><dd>055-706-555 <span class="tba">(เบอร์ต่อรอประกาศ)</span></dd><dt>LINE OA</dt><dd class="tba">รอประกาศ</dd><dt>Facebook</dt><dd class="tba">รอประกาศ</dd><dt>แผนที่</dt><dd><a href="#schedule">ดูหน้ากำหนดการและสถานที่</a></dd></dl></article>
+      </div>
+      <div class="head"><h2 class="lock"><span class="b">ช่องทางติดต่อแยกตามฝ่าย</span><span class="l">Department Contacts</span></h2></div>
+      <div class="grid2" id="contacts"></div>
+    </div>
+  </section>
+</div>
+</main>
+
+<footer>
+  <span class="pin"></span>
+  <div class="wrap">
+    <div><b style="font-size:22px">ICAC 2027</b><p class="small" style="margin-top:8px">The 16th International Conference on Arts and Culture · 24–26 กุมภาพันธ์ 2570<br>หอประชุมทีปังกรรัศมีโชติ มหาวิทยาลัยราชภัฏกำแพงเพชร</p></div>
+    <nav aria-label="เมนูท้ายหน้า" id="fnav"></nav>
+  </div>
+</footer>
+
+<script>
+/* ใส่ลิงก์จริงตรงนี้ — ลิงก์ที่ว่างจะแสดงเป็น "เปิดให้ใช้งานเร็วๆ นี้" */
+const LINKS = {
+  articleTemplate:"", posterTemplate:"", paperForm:"", paperList:"",
+  etiquetteRules:"", etiquetteForm:"", etiquetteList:"",
+  chantRules:"", chantForm:"", chantList:"",
+  certPoster:"", certEtiquette:"", certChant:"", certGeneral:""
+};
+const DATES = [
+  {c:"m",t:"เปิดรับบทความและสมัครแข่งขัน",d:"รอประกาศ"},
+  {c:"p",t:"ปิดรับสมัครและส่งผลงาน",d:"รอประกาศ"},
+  {c:"t",t:"ประกาศรายชื่อผู้มีสิทธิ์นำเสนอ / เข้าแข่งขัน",d:"รอประกาศ"},
+  {c:"b",t:"วันจัดงานประชุมวิชาการ ICAC 2027",d:"24–26 ก.พ. 2570"}
+];
+const NEWS = []; /* {date:"…", title:"…", url:"…"} */
+const CONTACTS = [
+  {c:"var(--magenta)",t:"ฝ่ายประสานงานบทความวิชาการ (Poster Presentation)",p:"อาจารย์ ดร.ธัญรดี บุญปัน",e:"icac2027.academic@kpru.ac.th"},
+  {c:"var(--purple)",t:"ฝ่ายประสานงานการแข่งขัน (มารยาทไทย)",p:"คุณสุวลัย อินทรรัตน์",e:"icac2027.culture@kpru.ac.th"},
+  {c:"var(--orange)",t:"ฝ่ายประสานงานการแข่งขัน (สวดมนต์หมู่ฯ)",p:"คุณจันทนา คุ้มกล่ำ",e:"icac2027.culture@kpru.ac.th"},
+  {c:"var(--teal)",t:"ฝ่ายเทคโนโลยีและระบบเว็บไซต์",p:"อาจารย์ ดร.พิมพ์นารา บรรจง และคุณจีรวรรณ ผึ่งบางแก้ว",e:"icac2027.it@kpru.ac.th"}
+];
+const PAGES = [["home","หน้าแรก"],["about","เกี่ยวกับงาน"],["academic","การประชุมวิชาการ"],["competitions","การแข่งขัน"],["certificates","เกียรติบัตร"],["schedule","กำหนดการและสถานที่"],["contact","ติดต่อเรา"]];
+
+const $=s=>document.querySelector(s);
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const navHTML=PAGES.map(([id,l])=>`<a href="#${id}" data-to="${id}">${l}</a>`).join("");
+$("#nav").innerHTML=navHTML; $("#drawer").innerHTML=navHTML; $("#fnav").innerHTML=navHTML;
+
+document.querySelectorAll("[data-link]").forEach(el=>{
+  const url=LINKS[el.dataset.link], label=el.textContent;
+  const a=document.createElement("a"); a.className="btn"+(el.closest(".band.blue,.band.dark")?" light":"");
+  if(url){a.href=url;a.target="_blank";a.rel="noopener";a.textContent=label;}
+  else{a.setAttribute("aria-disabled","true");a.setAttribute("role","link");a.innerHTML=`<span>${esc(label)}<span class="soon">เปิดให้ใช้งานเร็วๆ นี้</span></span>`;}
+  el.replaceWith(a);
+});
+
+$("#dates").innerHTML=DATES.map((x,i)=>`<div class="tile ${x.c}"><span class="num">0${i+1}</span><h3>${x.t}</h3><span class="when">${x.d}</span></div>`).join("");
+$("#news").innerHTML=NEWS.length?NEWS.map(n=>`<a class="card" href="${esc(n.url)}" target="_blank" rel="noopener"><span class="muted">${esc(n.date)}</span><h3>${esc(n.title)}</h3></a>`).join(""):
+ `<div class="empty"><svg viewBox="0 0 24 24"><path d="M4 5h16v11H8l-4 4z"/></svg><div><b>ยังไม่มีประกาศใหม่</b><p class="muted">ข่าวสารและประกาศจากผู้จัดจะแสดงที่นี่ เช่น การขยายเวลาส่งบทความ</p></div></div>`;
+$("#contacts").innerHTML=CONTACTS.map(x=>`<article class="contact" style="--c:${x.c}"><h3>${x.t}</h3><dl class="kv"><dt>ผู้ประสานงาน</dt><dd>${x.p}</dd><dt>อีเมล</dt><dd><span class="em">${x.e}</span><button class="copy" type="button" data-copy="${x.e}">คัดลอก</button></dd><dt>โทรศัพท์</dt><dd class="tba">รอประกาศ</dd></dl></article>`).join("");
+document.addEventListener("click",e=>{
+  const b=e.target.closest("[data-copy]"); if(b){
+    const done=()=>{b.textContent="คัดลอกแล้ว";setTimeout(()=>b.textContent="คัดลอก",1600)};
+    try{navigator.clipboard.writeText(b.dataset.copy).then(done,()=>{const r=document.createRange();r.selectNodeContents(b.previousElementSibling);getSelection().removeAllRanges();getSelection().addRange(r);});}catch(_){}
+  }
+  if(e.target.closest('[aria-disabled="true"]')) e.preventDefault();
+});
+
+/* router */
+function show(){
+  let h=(location.hash||"#home").slice(1), anchor=null;
+  if(h==="academic-list"){h="academic";anchor="academic-list-anchor";}
+  if(!PAGES.some(p=>p[0]===h)) h="home";
+  document.querySelectorAll(".page").forEach(p=>p.hidden=p.dataset.page!==h);
+  document.querySelectorAll("[data-to]").forEach(a=>a.dataset.to===h?a.setAttribute("aria-current","page"):a.removeAttribute("aria-current"));
+  $("#drawer").hidden=true; $("#menuBtn").setAttribute("aria-expanded","false");
+  if(anchor){document.getElementById(anchor).scrollIntoView();} else window.scrollTo(0,0);
+}
+addEventListener("hashchange",show); show();
+$("#menuBtn").addEventListener("click",()=>{const d=$("#drawer");d.hidden=!d.hidden;$("#menuBtn").setAttribute("aria-expanded",String(!d.hidden));});
+
+/* countdown: 24 Feb 2027 08:30 Asia/Bangkok */
+const START=Date.parse("2027-02-24T08:30:00+07:00");
+function tick(){let ms=Math.max(0,START-Date.now());const d=Math.floor(ms/864e5),hh=Math.floor(ms%864e5/36e5),mm=Math.floor(ms%36e5/6e4);
+  $("#cdD").textContent=d;$("#cdH").textContent=String(hh).padStart(2,"0");$("#cdM").textContent=String(mm).padStart(2,"0");}
+tick(); setInterval(tick,15000);
+</script>
+
+</body>
+</html>
