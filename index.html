@@ -44,7 +44,11 @@ p{margin:0}
 .brand{display:flex;align-items:baseline;gap:var(--space-2);color:var(--on-color);text-decoration:none;font-family:var(--font-display);white-space:nowrap}
 .brand b{font-size:24px;font-weight:700;letter-spacing:.01em}
 .brand span{font-size:13px;opacity:.8}
-.menu-btn{margin-left:auto;background:none;border:1px solid rgba(255,255,255,.5);color:var(--on-color);font:600 14px var(--font-display);padding:6px 14px;cursor:pointer}
+.lang-btn{margin-left:auto;background:var(--orange);color:#2b1a0c;border:0;font:700 14px var(--font-display);min-width:48px;height:36px;padding:0 12px;cursor:pointer;letter-spacing:.04em}
+.lang-btn:hover{filter:brightness(1.08)}
+@media (min-width:1100px){.lang-btn{margin-left:var(--space-4)}}
+.lock .l:empty{display:none}
+.menu-btn{margin-left:var(--space-2);background:none;border:1px solid rgba(255,255,255,.5);color:var(--on-color);font:600 14px var(--font-display);padding:6px 14px;cursor:pointer}
 nav.main{display:none}
 nav.main a{color:var(--on-color);text-decoration:none;font-family:var(--font-display);font-size:15px;padding:var(--space-2) var(--space-2);white-space:nowrap;border-bottom:3px solid transparent}
 nav.main a[aria-current="page"]{border-bottom-color:var(--orange)}
@@ -90,40 +94,31 @@ nav.main a:hover{border-bottom-color:rgba(255,255,255,.5)}
 .soon{display:block;font:500 12px var(--font-sans);opacity:.85}
 .btns{display:flex;flex-wrap:wrap;gap:var(--space-4)}
 
-/* hero carousel */
-.hero-car{position:relative;color:var(--on-color);background:var(--brown-deep)}
-.slides{display:grid}
-.slide{grid-area:1/1;position:relative;overflow:hidden;padding-block:56px 96px;opacity:0;visibility:hidden;transition:opacity .6s ease,visibility 0s linear .6s}
+/* hero carousel — mode A: full-image banners, 1170 × 500 px each (images/banner-N.jpg); a designed fallback shows until an image loads */
+.hero-car{background:var(--brown-deep);padding-block:var(--space-6) var(--space-4)}
+.car-frame{max-width:1170px;margin-inline:auto;padding-inline:var(--space-4)}
+@media (min-width:1202px){.car-frame{padding-inline:0}}
+.slides{display:grid;aspect-ratio:1170/500;width:100%;max-width:100%;overflow:hidden;background:var(--brown)}
+.slide{grid-area:1/1;display:block;position:relative;opacity:0;visibility:hidden;transition:opacity .6s ease,visibility 0s linear .6s;color:#fff;text-decoration:none}
 .slide.is-on{opacity:1;visibility:visible;transition:opacity .6s ease}
-.s1{background:linear-gradient(155deg,var(--brown) 0%,var(--brown-deep) 100%)}
-.s2{background:var(--brown-deep)}
-.s3{background:var(--ochre)}
-.s4{background:linear-gradient(155deg,var(--brown-deep) 0%,var(--brown) 100%)}
-@media (min-width:900px){.slide{padding-block:72px 112px}}
-.slide-grid{display:grid;gap:var(--space-12);align-items:center}
-@media (min-width:980px){.slide-grid{grid-template-columns:minmax(0,1.45fr) minmax(0,1fr)}}
-.art svg{display:block;width:100%;max-width:400px;height:auto;margin-inline:auto}
-@media (max-width:979px){.art{display:none}}
-.f-or{fill:var(--orange)}.f-oc{fill:var(--ochre)}.f-tan{fill:var(--tan)}.f-br{fill:var(--brown)}.f-dp{fill:var(--brown-deep)}.f-w{fill:#fff}
-.s3 .f-oc{fill:var(--brown)}
-.art-num{font:700 96px var(--font-display);fill:var(--brown-deep)}
-.sl-copy{display:flex;flex-direction:column;gap:var(--space-4);min-width:0}
-.presents{font-size:15px;opacity:.92;max-width:60ch}
-.kicker{font:600 14px var(--font-display);letter-spacing:.06em;text-transform:uppercase;color:var(--tan)}
-.s3 .kicker{color:#fff}
-.hero-name{font-size:clamp(56px,11vw,108px);line-height:.92;font-weight:700;letter-spacing:-.01em}
-.hero-name small{display:block;font-size:clamp(18px,2.4vw,24px);font-weight:500;letter-spacing:0;margin-top:var(--space-2)}
-.big{font-size:clamp(32px,5vw,56px);font-weight:700;line-height:1.12}
-.lede{font-size:17px;line-height:1.7;max-width:56ch;opacity:.95}
-.th-name{font:500 clamp(17px,2vw,20px)/1.5 var(--font-display);max-width:44ch}
-.theme{padding-left:var(--space-4);border-left:4px solid var(--orange);font:500 clamp(18px,2.2vw,22px)/1.5 var(--font-display);max-width:40ch}
-.when-line{display:flex;flex-wrap:wrap;gap:var(--space-1) var(--space-6);font-size:15px}
-.when-line b{font-family:var(--font-display);font-weight:600;color:var(--tan)}
-.s3 .when-line b{color:#fff}
-.chips{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:var(--space-2)}
-.chips li{border:1px solid rgba(255,255,255,.55);padding:4px 12px;font-size:14px}
-.sl-copy .btns{margin-top:var(--space-2)}
-.car-ctl{position:absolute;left:0;right:0;bottom:var(--space-6);display:flex;align-items:center;gap:var(--space-2)}
+.slide img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+.slide:focus-visible{outline:3px solid var(--orange);outline-offset:-3px}
+/* fallback banner (no image yet) */
+.fb{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;gap:clamp(4px,1.2vw,12px);padding:4% 6%;overflow:hidden}
+.fb.f1{background:linear-gradient(155deg,var(--brown),var(--brown-deep))}
+.fb.f2{background:var(--orange);color:#2b1a0c}
+.fb.f3{background:var(--ochre)}
+.fb.f4{background:linear-gradient(155deg,var(--brown-deep),var(--brown))}
+.fb .k{font:600 clamp(11px,1.4vw,15px) var(--font-display);letter-spacing:.06em;text-transform:uppercase;opacity:.9;max-width:60%}
+.fb .t{font:700 clamp(22px,5vw,58px)/1.05 var(--font-display);max-width:62%;text-wrap:balance}
+.fb .d{font:500 clamp(11px,1.5vw,17px) var(--font-sans);max-width:60%}
+.fb::before{content:"";position:absolute;right:0;top:0;width:34%;height:100%;background:var(--tan);clip-path:polygon(40% 0,100% 0,100% 100%,0 100%)}
+.fb::after{content:"";position:absolute;right:0;bottom:0;width:20%;height:58%;background:var(--orange);clip-path:polygon(100% 0,100% 100%,0 100%)}
+.fb.f2::after{background:var(--brown)}
+.fb.f3::before{background:var(--brown)}
+.slide.has-img .fb{display:none}
+.car-ctl{max-width:1170px;margin:var(--space-2) auto 0;padding-inline:var(--space-4);display:flex;align-items:center;gap:var(--space-2);color:#fff}
+@media (min-width:1202px){.car-ctl{padding-inline:0}}
 .cbtn{min-width:40px;height:40px;background:transparent;color:#fff;border:1px solid rgba(255,255,255,.6);font:500 22px/1 var(--font-display);cursor:pointer}
 .cbtn.wide{font-size:14px;padding-inline:12px;margin-left:auto}
 .cbtn:hover{background:rgba(255,255,255,.12)}
@@ -131,9 +126,9 @@ nav.main a:hover{border-bottom-color:rgba(255,255,255,.5)}
 .dots button{width:32px;height:40px;background:none;border:0;padding:0;cursor:pointer;position:relative}
 .dots button::before{content:"";position:absolute;left:0;right:0;top:17px;height:6px;background:rgba(255,255,255,.4)}
 .dots button[aria-selected="true"]::before{background:var(--orange)}
-.hero-car[data-slide="2"] .dots button[aria-selected="true"]::before{background:#fff}
 @media (prefers-reduced-motion:reduce){.slide,.slide.is-on{transition:none}}
 
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 /* countdown strip */
 .cd-strip{background:var(--charcoal);color:#fff;border-top:4px solid var(--orange);padding-block:var(--space-6)}
 .cd-row{display:grid;gap:var(--space-4);align-items:center}
@@ -247,9 +242,10 @@ footer nav a{color:#fff;font-size:14px}
 
 <header class="top">
   <div class="wrap">
-    <a class="brand" href="#home"><b>ICAC 2027</b><span>ครั้งที่ 16</span></a>
+    <a class="brand" href="#home"><b>ICAC 2027</b><span data-en="16th Edition">ครั้งที่ 16</span></a>
     <nav class="main" aria-label="เมนูหลัก" id="nav"></nav>
-    <button class="menu-btn" id="menuBtn" aria-expanded="false" aria-controls="drawer">เมนู</button>
+    <button class="lang-btn" id="langBtn" type="button" lang="en" aria-label="Switch to English">EN</button>
+    <button class="menu-btn" id="menuBtn" aria-expanded="false" aria-controls="drawer" data-en="Menu">เมนู</button>
   </div>
   <div class="drawer" id="drawer" hidden></div>
 </header>
@@ -258,76 +254,24 @@ footer nav a{color:#fff;font-size:14px}
 <!-- ================= HOME ================= -->
 <div class="page" data-page="home">
   <section class="hero-car" aria-roledescription="carousel" aria-label="แบนเนอร์ประชาสัมพันธ์">
-    <div class="slides">
-      <article class="slide s1 is-on" aria-roledescription="slide" aria-label="1 จาก 4: การจัดงาน">
-        <span class="tri tl"></span><span class="tri br2"></span>
-        <div class="wrap slide-grid">
-          <div class="sl-copy">
-            <p class="presents">เครือข่ายศิลปวัฒนธรรมมหาวิทยาลัยแห่งประเทศไทย และมหาวิทยาลัยราชภัฏกำแพงเพชร (KPRU) ภูมิใจเสนอ</p>
-            <h1 class="hero-name">ICAC 2027<small>The 16th International Conference on Arts and Culture</small></h1>
-            <p class="th-name">งานประชุมวิชาการระดับชาติและนานาชาติ ครั้งที่ 16 เครือข่ายศิลปวัฒนธรรมมหาวิทยาลัยแห่งประเทศไทย</p>
-            <p class="theme">“ภูมิทัศน์วัฒนธรรมพื้นถิ่นขับเคลื่อนซอฟต์พาวเวอร์ไทยสู่เศรษฐกิจสร้างสรรค์”</p>
-            <p class="when-line"><b>24–26 กุมภาพันธ์ 2570</b><span>หอประชุมทีปังกรรัศมีโชติ มหาวิทยาลัยราชภัฏกำแพงเพชร</span></p>
-            <div class="btns"><a class="btn light" href="#academic">ส่งบทความวิชาการ (Poster)</a><a class="btn light alt" href="#competitions">สมัครแข่งขันทักษะทางวัฒนธรรม</a></div>
-          </div>
-          <div class="art" aria-hidden="true"><svg viewBox="0 0 400 320">
-            <rect class="f-or" x="40" y="40" width="200" height="240"/><rect class="f-oc" x="240" y="40" width="120" height="120"/><rect class="f-tan" x="240" y="160" width="120" height="120"/>
-            <polygon class="f-dp" points="40,280 140,280 40,180"/><polygon class="f-w" points="360,40 360,100 300,40"/><polygon class="f-br" points="240,280 300,280 240,220"/>
-            <text class="art-num" x="56" y="120">16</text></svg></div>
-        </div>
-      </article>
-      <article class="slide s2" aria-roledescription="slide" aria-label="2 จาก 4: เชิญชวนส่งบทความ">
-        <span class="tri tl"></span>
-        <div class="wrap slide-grid">
-          <div class="sl-copy">
-            <p class="kicker">Call for Papers · Poster Presentation</p>
-            <h2 class="big">เชิญชวนส่งบทความวิชาการ</h2>
-            <p class="lede">เปิดรับบทความวิชาการและบทความวิจัยจากคณาจารย์ นักวิจัย นักศึกษา และผู้สนใจ เพื่อนำเสนอผลงานในรูปแบบโปสเตอร์ แลกเปลี่ยนองค์ความรู้และนวัตกรรมด้านศิลปวัฒนธรรม</p>
-            <ul class="chips"><li>ศิลปกรรม ดนตรี นาฏศิลป์</li><li>ประวัติศาสตร์ โบราณคดี ภาษา วรรณกรรม</li><li>ภูมิปัญญาท้องถิ่น วัฒนธรรมศึกษา</li><li>เศรษฐกิจสร้างสรรค์จากทุนวัฒนธรรม</li></ul>
-            <p class="when-line"><b>24–26 กุมภาพันธ์ 2570</b><span>หอประชุมทีปังกรรัศมีโชติ มหาวิทยาลัยราชภัฏกำแพงเพชร</span></p>
-            <div class="btns"><a class="btn light" href="#academic">ดูรายละเอียดและส่งบทความ</a></div>
-          </div>
-          <div class="art" aria-hidden="true"><svg viewBox="0 0 400 320">
-            <rect class="f-tan" x="80" y="56" width="170" height="230"/><rect class="f-w" x="130" y="30" width="170" height="230"/>
-            <polygon class="f-or" points="300,30 300,90 240,30"/>
-            <rect class="f-br" x="154" y="76" width="96" height="10"/><rect class="f-tan" x="154" y="100" width="122" height="8"/><rect class="f-tan" x="154" y="118" width="122" height="8"/><rect class="f-tan" x="154" y="136" width="90" height="8"/>
-            <rect class="f-or" x="154" y="164" width="122" height="72"/><rect class="f-oc" x="300" y="200" width="60" height="60"/></svg></div>
-        </div>
-      </article>
-      <article class="slide s3" aria-roledescription="slide" aria-label="3 จาก 4: เชิญชวนประกวดมารยาทไทย">
-        <span class="tri br2"></span>
-        <div class="wrap slide-grid">
-          <div class="sl-copy">
-            <p class="kicker">Thai Etiquette Competition · ระดับชาติ</p>
-            <h2 class="big">เชิญชวนร่วมประกวดมารยาทไทย</h2>
-            <p class="lede">เวทีแสดงความภาคภูมิใจในเอกลักษณ์ไทย ประกวดการกราบ การไหว้ การนั่ง การยืน และการเดิน สำหรับเยาวชนและนิสิตนักศึกษา</p>
-            <p class="when-line"><b>24–26 กุมภาพันธ์ 2570</b><span>หอประชุมทีปังกรรัศมีโชติ มหาวิทยาลัยราชภัฏกำแพงเพชร</span></p>
-            <div class="btns"><a class="btn light" href="#competitions">ดูเกณฑ์และสมัครประกวด</a></div>
-          </div>
-          <div class="art" aria-hidden="true"><svg viewBox="0 0 400 320">
-            <polygon class="f-or" points="200,30 120,290 200,290"/><polygon class="f-tan" points="200,30 280,290 200,290"/>
-            <polygon class="f-dp" points="60,290 120,290 60,200"/><polygon class="f-dp" points="340,290 280,290 340,200"/>
-            <rect class="f-w" x="60" y="290" width="280" height="10"/></svg></div>
-        </div>
-      </article>
-      <article class="slide s4" aria-roledescription="slide" aria-label="4 จาก 4: เชิญชวนประกวดสวดมนต์หมู่">
-        <span class="tri tl"></span>
-        <div class="wrap slide-grid">
-          <div class="sl-copy">
-            <p class="kicker">Chanting Competition</p>
-            <h2 class="big">เชิญชวนร่วมประกวดสวดมนต์หมู่ทำนองสรภัญญะ</h2>
-            <p class="lede">ประกวดบทสวดบังคับและบทสวดสรรเสริญพระรัตนตรัย ตัดสินจากจังหวะ ทำนอง และความพร้อมเพรียง</p>
-            <p class="when-line"><b>24–26 กุมภาพันธ์ 2570</b><span>หอประชุมทีปังกรรัศมีโชติ มหาวิทยาลัยราชภัฏกำแพงเพชร</span></p>
-            <div class="btns"><a class="btn light" href="#competitions">ดูบทสวด เกณฑ์ และสมัครประกวด</a></div>
-          </div>
-          <div class="art" aria-hidden="true"><svg viewBox="0 0 400 320">
-            <path class="f-tan" d="M60 290 A230 230 0 0 1 290 60 L290 290 Z"/><path class="f-or" d="M120 290 A170 170 0 0 1 290 120 L290 290 Z"/>
-            <path class="f-oc" d="M180 290 A110 110 0 0 1 290 180 L290 290 Z"/><path class="f-dp" d="M240 290 A50 50 0 0 1 290 240 L290 290 Z"/>
-            <rect class="f-w" x="300" y="60" width="40" height="40"/><rect class="f-or" x="300" y="110" width="40" height="40"/></svg></div>
-        </div>
-      </article>
+    <h1 class="sr">ICAC 2027 · The 16th International Conference on Arts and Culture</h1>
+    <div class="car-frame">
+      <div class="slides">
+        <a class="slide is-on" href="#home-news" aria-roledescription="slide" aria-label="1 จาก 4: การจัดงาน ICAC 2027 วันที่ 24–26 กุมภาพันธ์ 2570 ณ มหาวิทยาลัยราชภัฏกำแพงเพชร" data-alt="การจัดงาน ICAC 2027 วันที่ 24–26 กุมภาพันธ์ 2570 ณ มหาวิทยาลัยราชภัฏกำแพงเพชร">
+          <div class="fb f1" aria-hidden="true"><p class="k" data-en="ICAC 2027 · 16th Conference">ICAC 2027 · ครั้งที่ 16</p><p class="t" data-en="The 16th International Conference on Arts and Culture">งานประชุมวิชาการระดับชาติและนานาชาติ ICAC 2027</p><p class="d" data-en="24–26 February 2027 · Kamphaeng Phet Rajabhat University">24–26 กุมภาพันธ์ 2570 · มหาวิทยาลัยราชภัฏกำแพงเพชร</p></div>
+        </a>
+        <a class="slide" href="#academic" aria-roledescription="slide" aria-label="2 จาก 4: เชิญชวนส่งบทความวิชาการ นำเสนอแบบโปสเตอร์" data-alt="เชิญชวนส่งบทความวิชาการ นำเสนอแบบโปสเตอร์">
+          <div class="fb f2" aria-hidden="true"><p class="k">Call for Papers · Poster Presentation</p><p class="t" data-en="Call for Papers">เชิญชวนส่งบทความวิชาการ</p><p class="d" data-en="Arts · History · Local Wisdom · Creative Economy">ศิลปกรรม · ประวัติศาสตร์ · ภูมิปัญญาท้องถิ่น · เศรษฐกิจสร้างสรรค์</p></div>
+        </a>
+        <a class="slide" href="#competitions" aria-roledescription="slide" aria-label="3 จาก 4: เชิญชวนร่วมประกวดมารยาทไทย ระดับชาติ" data-alt="เชิญชวนร่วมประกวดมารยาทไทย ระดับชาติ">
+          <div class="fb f3" aria-hidden="true"><p class="k" data-en="Thai Etiquette Competition · National Level">Thai Etiquette Competition · ระดับชาติ</p><p class="t" data-en="Join the Thai Etiquette Competition">เชิญชวนร่วมประกวดมารยาทไทย</p><p class="d" data-en="Prostrating, the wai, sitting, standing and walking">การกราบ การไหว้ การนั่ง การยืน และการเดิน</p></div>
+        </a>
+        <a class="slide" href="#competitions" aria-roledescription="slide" aria-label="4 จาก 4: เชิญชวนร่วมประกวดสวดมนต์หมู่ทำนองสรภัญญะ" data-alt="เชิญชวนร่วมประกวดสวดมนต์หมู่ทำนองสรภัญญะ">
+          <div class="fb f4" aria-hidden="true"><p class="k">Chanting Competition</p><p class="t" data-en="Join the Sarabhanya Group Chanting Competition">เชิญชวนร่วมประกวดสวดมนต์หมู่ทำนองสรภัญญะ</p><p class="d" data-en="Rhythm · Melody · Unison">จังหวะ · ทำนอง · ความพร้อมเพรียง</p></div>
+        </a>
+      </div>
     </div>
-    <div class="car-ctl wrap">
+    <div class="car-ctl">
       <button type="button" class="cbtn" id="carPrev" aria-label="แบนเนอร์ก่อนหน้า">‹</button>
       <div class="dots" role="tablist" aria-label="เลือกแบนเนอร์">
         <button type="button" role="tab" aria-selected="true" aria-label="การจัดงาน"></button><button type="button" role="tab" aria-selected="false" aria-label="ส่งบทความ"></button><button type="button" role="tab" aria-selected="false" aria-label="ประกวดมารยาทไทย"></button><button type="button" role="tab" aria-selected="false" aria-label="ประกวดสวดมนต์หมู่"></button>
@@ -339,16 +283,16 @@ footer nav a{color:#fff;font-size:14px}
 
   <section class="cd-strip" aria-live="polite">
     <div class="wrap cd-row">
-      <div><h2>นับถอยหลังสู่วันงาน</h2><p>เริ่มงาน 24 กุมภาพันธ์ 2570 เวลา 08:30 น.</p></div>
-      <div class="cd"><div><b id="cdD">--</b><span>วัน</span></div><div><b id="cdH">--</b><span>ชั่วโมง</span></div><div><b id="cdM">--</b><span>นาที</span></div></div>
+      <div><h2 data-en="Countdown to the Conference">นับถอยหลังสู่วันงาน</h2><p data-en="Opens 24 February 2027 at 08:30 (Bangkok time)">เริ่มงาน 24 กุมภาพันธ์ 2570 เวลา 08:30 น.</p></div>
+      <div class="cd"><div><b id="cdD">--</b><span data-en="Days">วัน</span></div><div><b id="cdH">--</b><span data-en="Hours">ชั่วโมง</span></div><div><b id="cdM">--</b><span data-en="Minutes">นาที</span></div></div>
     </div>
   </section>
 
   <section class="band">
     <div class="wrap">
       <div class="head split">
-        <h2 class="lock"><span class="b">ข่าวประชาสัมพันธ์</span><span class="l">News &amp; Announcements</span></h2>
-        <p class="desc muted">ประกาศเร่งด่วนและข่าวล่าสุดจากผู้จัด เช่น การขยายเวลาส่งบทความ หรือการเพิ่มห้องประชุม</p>
+        <h2 class="lock" id="home-news-anchor"><span class="b" data-en="News">ข่าวประชาสัมพันธ์</span><span class="l" data-en="&amp;amp; Announcements">News &amp; Announcements</span></h2>
+        <p class="desc muted" data-en="Urgent notices and the latest news from the organisers, such as deadline extensions or added sessions.">ประกาศเร่งด่วนและข่าวล่าสุดจากผู้จัด เช่น การขยายเวลาส่งบทความ หรือการเพิ่มห้องประชุม</p>
       </div>
       <div class="news" id="news"></div>
     </div>
@@ -356,13 +300,13 @@ footer nav a{color:#fff;font-size:14px}
 
   <section class="band alt">
     <div class="wrap">
-      <div class="head"><h2 class="lock"><span class="b">ลิงก์ด่วน</span><span class="l">Quick Links</span></h2></div>
+      <div class="head"><h2 class="lock"><span class="b" data-en="Quick">ลิงก์ด่วน</span><span class="l" data-en="Links">Quick Links</span></h2></div>
     </div>
     <div class="tiles">
-      <a class="tile m" href="#academic"><svg viewBox="0 0 24 24"><path d="M6 3h9l4 4v14H6z"/><path d="M14 3v5h5M9 13h7M9 17h7"/></svg><h3>ส่งบทความวิชาการ (Poster)</h3><p>ขอบเขตบทความ เทมเพลต และลิงก์ส่งผลงาน</p></a>
-      <a class="tile p" href="#competitions"><svg viewBox="0 0 24 24"><path d="M12 3a3 3 0 0 1 3 3v5a3 3 0 0 1-6 0V6a3 3 0 0 1 3-3z"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg><h3>สมัครประกวดมารยาทไทย / สวดมนต์หมู่ฯ</h3><p>เกณฑ์การแข่งขันและลิงก์สมัคร</p></a>
-      <a class="tile t" href="#academic-list"><svg viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg><h3>ตรวจสอบรายชื่อผู้เข้าร่วม</h3><p>ประกาศรายชื่อผ่าน Looker Studio</p></a>
-      <a class="tile g" href="#certificates"><svg viewBox="0 0 24 24"><circle cx="12" cy="9" r="5"/><path d="M9 13.5 7.5 21l4.5-2.5 4.5 2.5-1.5-7.5"/></svg><h3>ดาวน์โหลดเกียรติบัตร</h3><p>ระบบเกียรติบัตร KPRU แยกตามหมวดหมู่</p></a>
+      <a class="tile m" href="#academic"><svg viewBox="0 0 24 24"><path d="M6 3h9l4 4v14H6z"/><path d="M14 3v5h5M9 13h7M9 17h7"/></svg><h3 data-en="Submit a Paper (Poster)">ส่งบทความวิชาการ (Poster)</h3><p data-en="Paper scope, templates and submission link">ขอบเขตบทความ เทมเพลต และลิงก์ส่งผลงาน</p></a>
+      <a class="tile p" href="#competitions"><svg viewBox="0 0 24 24"><path d="M12 3a3 3 0 0 1 3 3v5a3 3 0 0 1-6 0V6a3 3 0 0 1 3-3z"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg><h3 data-en="Enter Thai Etiquette / Group Chanting">สมัครประกวดมารยาทไทย / สวดมนต์หมู่ฯ</h3><p data-en="Competition rules and registration">เกณฑ์การแข่งขันและลิงก์สมัคร</p></a>
+      <a class="tile t" href="#academic-list"><svg viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg><h3 data-en="Check Participant Lists">ตรวจสอบรายชื่อผู้เข้าร่วม</h3><p data-en="Lists published on Looker Studio">ประกาศรายชื่อผ่าน Looker Studio</p></a>
+      <a class="tile g" href="#certificates"><svg viewBox="0 0 24 24"><circle cx="12" cy="9" r="5"/><path d="M9 13.5 7.5 21l4.5-2.5 4.5 2.5-1.5-7.5"/></svg><h3 data-en="Download Certificates">ดาวน์โหลดเกียรติบัตร</h3><p data-en="KPRU certificate system, by category">ระบบเกียรติบัตร KPRU แยกตามหมวดหมู่</p></a>
     </div>
   </section>
 </div>
@@ -371,29 +315,29 @@ footer nav a{color:#fff;font-size:14px}
 <div class="page" data-page="about" hidden>
   <section class="band blue"><span class="tri br"></span>
     <div class="wrap"><p class="eyebrow" style="color:var(--tan)">About ICAC 2027</p>
-      <h1 class="lock" style="margin-top:8px"><span class="b">เกี่ยวกับงาน</span><span class="l">ประชุมวิชาการ ICAC 2027</span></h1>
+      <h1 class="lock" style="margin-top:8px"><span class="b" data-en="About">เกี่ยวกับงาน</span><span class="l" data-en="ICAC 2027">ประชุมวิชาการ ICAC 2027</span></h1>
     </div>
   </section>
   <section class="band">
     <div class="wrap">
-      <p class="lead">งานประชุมวิชาการระดับชาติและนานาชาติ ครั้งที่ 16 (The 16th International Conference on Arts and Culture: ICAC 2027) เป็นเวทีสำคัญในการแลกเปลี่ยนเรียนรู้ องค์ความรู้ ผลงานวิจัย และนวัตกรรมด้านศิลปวัฒนธรรม เพื่อสืบสาน ทำนุบำรุง และต่อยอดมรดกทางวัฒนธรรมอันทรงคุณค่าให้ก้าวทันยุคสมัย พร้อมทั้งเสริมสร้างเครือข่ายความร่วมมือทางวิชาการและวัฒนธรรมระหว่างสถาบันอุดมศึกษาทั้งในและต่างประเทศ</p>
+      <p class="lead" data-en="The 16th International Conference on Arts and Culture (ICAC 2027) is a national and international forum for sharing knowledge, research and innovation in arts and culture. It aims to preserve, sustain and build on valuable cultural heritage for the present day, and to strengthen academic and cultural cooperation among higher-education institutions in Thailand and abroad.">งานประชุมวิชาการระดับชาติและนานาชาติ ครั้งที่ 16 (The 16th International Conference on Arts and Culture: ICAC 2027) เป็นเวทีสำคัญในการแลกเปลี่ยนเรียนรู้ องค์ความรู้ ผลงานวิจัย และนวัตกรรมด้านศิลปวัฒนธรรม เพื่อสืบสาน ทำนุบำรุง และต่อยอดมรดกทางวัฒนธรรมอันทรงคุณค่าให้ก้าวทันยุคสมัย พร้อมทั้งเสริมสร้างเครือข่ายความร่วมมือทางวิชาการและวัฒนธรรมระหว่างสถาบันอุดมศึกษาทั้งในและต่างประเทศ</p>
     </div>
   </section>
   <section class="band alt">
     <div class="wrap grid2">
-      <article class="card"><p class="eyebrow">Network Background</p><h3>ความเป็นมาของเครือข่ายศิลปวัฒนธรรมมหาวิทยาลัยแห่งประเทศไทย</h3>
-        <p>เครือข่ายเกิดจากการรวมตัวของมหาวิทยาลัยสมาชิกทั่วประเทศ ที่มีเจตนารมณ์ร่วมกันในการขับเคลื่อนงานด้านศิลปวัฒนธรรมให้เป็นเสาหลักในการพัฒนาสังคมและประเทศชาติ</p></article>
-      <article class="card"><p class="eyebrow">Host Institution</p><h3>เจ้าภาพหลัก: มหาวิทยาลัยราชภัฏกำแพงเพชร (KPRU)</h3>
-        <p>มหาวิทยาลัยราชภัฏกำแพงเพชรเป็นเจ้าภาพและสถานที่จัดงานในปีนี้ พร้อมต้อนรับคณาจารย์ นักวิชาการ นิสิต นักศึกษา และผู้สนใจจากทั่วประเทศและนานาชาติ สู่จังหวัดกำแพงเพชร เมืองมรดกโลกทางวัฒนธรรม</p></article>
+      <article class="card"><p class="eyebrow">Network Background</p><h3 data-en="About the Arts and Culture Network of Thai Universities">ความเป็นมาของเครือข่ายศิลปวัฒนธรรมมหาวิทยาลัยแห่งประเทศไทย</h3>
+        <p data-en="The network brings together member universities across Thailand that share a commitment to making arts and culture a pillar of social and national development.">เครือข่ายเกิดจากการรวมตัวของมหาวิทยาลัยสมาชิกทั่วประเทศ ที่มีเจตนารมณ์ร่วมกันในการขับเคลื่อนงานด้านศิลปวัฒนธรรมให้เป็นเสาหลักในการพัฒนาสังคมและประเทศชาติ</p></article>
+      <article class="card"><p class="eyebrow">Host Institution</p><h3 data-en="Main Host: Kamphaeng Phet Rajabhat University (KPRU)">เจ้าภาพหลัก: มหาวิทยาลัยราชภัฏกำแพงเพชร (KPRU)</h3>
+        <p data-en="Kamphaeng Phet Rajabhat University hosts this year&#x27;s conference and welcomes lecturers, scholars, students and guests from Thailand and abroad to Kamphaeng Phet, a World Heritage city.">มหาวิทยาลัยราชภัฏกำแพงเพชรเป็นเจ้าภาพและสถานที่จัดงานในปีนี้ พร้อมต้อนรับคณาจารย์ นักวิชาการ นิสิต นักศึกษา และผู้สนใจจากทั่วประเทศและนานาชาติ สู่จังหวัดกำแพงเพชร เมืองมรดกโลกทางวัฒนธรรม</p></article>
     </div>
   </section>
   <section class="band">
     <div class="wrap">
-      <div class="head"><h2 class="lock"><span class="b">วัตถุประสงค์</span><span class="l">Objectives</span></h2></div>
+      <div class="head"><h2 class="lock"><span class="b" data-en="Objectives">วัตถุประสงค์</span><span class="l" data-en="">Objectives</span></h2></div>
       <ol class="obj">
-        <li><span>เพื่อเป็นเวทีเผยแพร่ผลงานวิจัย งานสร้างสรรค์ และบทความวิชาการด้านศิลปวัฒนธรรม</span></li>
-        <li><span>เพื่อส่งเสริมและเปิดโอกาสให้นิสิต นักศึกษา ได้แสดงออกถึงความสามารถและทักษะทางศิลปวัฒนธรรมผ่านการแข่งขัน</span></li>
-        <li><span>เพื่อสร้างเครือข่ายความร่วมมือทางวิชาการและการแลกเปลี่ยนเรียนรู้ระดับชาติและนานาชาติ</span></li>
+        <li><span data-en="To provide a forum for research, creative work and academic papers in arts and culture">เพื่อเป็นเวทีเผยแพร่ผลงานวิจัย งานสร้างสรรค์ และบทความวิชาการด้านศิลปวัฒนธรรม</span></li>
+        <li><span data-en="To encourage students to show their cultural skills and talent through competitions">เพื่อส่งเสริมและเปิดโอกาสให้นิสิต นักศึกษา ได้แสดงออกถึงความสามารถและทักษะทางศิลปวัฒนธรรมผ่านการแข่งขัน</span></li>
+        <li><span data-en="To build national and international networks for academic cooperation and exchange">เพื่อสร้างเครือข่ายความร่วมมือทางวิชาการและการแลกเปลี่ยนเรียนรู้ระดับชาติและนานาชาติ</span></li>
       </ol>
     </div>
   </section>
@@ -403,31 +347,31 @@ footer nav a{color:#fff;font-size:14px}
 <div class="page" data-page="academic" hidden>
   <section class="band blue"><span class="tri br"></span>
     <div class="wrap"><p class="eyebrow" style="color:var(--tan)">Academic Conference · Poster Presentation</p>
-      <h1 class="lock" style="margin-top:8px"><span class="b">การประชุมวิชาการ</span><span class="l">ระดับชาติและนานาชาติ ด้านศิลปวัฒนธรรม</span></h1>
-      <p style="margin-top:16px;max-width:66ch;opacity:.92">เปิดรับบทความวิชาการและบทความวิจัยจากคณาจารย์ นักวิจัย นักศึกษา และผู้สนใจ เพื่อนำเสนอผลงานในรูปแบบโปสเตอร์ (Poster Presentation) แลกเปลี่ยนองค์ความรู้และนวัตกรรมด้านศิลปวัฒนธรรม</p>
+      <h1 class="lock" style="margin-top:8px"><span class="b" data-en="Academic Conference">การประชุมวิชาการ</span><span class="l" data-en="National &amp;amp; International · Arts and Culture">ระดับชาติและนานาชาติ ด้านศิลปวัฒนธรรม</span></h1>
+      <p style="margin-top:16px;max-width:66ch;opacity:.92" data-en="We invite academic and research papers from lecturers, researchers, students and other interested people, presented as posters, to share knowledge and innovation in arts and culture.">เปิดรับบทความวิชาการและบทความวิจัยจากคณาจารย์ นักวิจัย นักศึกษา และผู้สนใจ เพื่อนำเสนอผลงานในรูปแบบโปสเตอร์ (Poster Presentation) แลกเปลี่ยนองค์ความรู้และนวัตกรรมด้านศิลปวัฒนธรรม</p>
     </div>
   </section>
   <section class="band">
-    <div class="wrap"><div class="head split"><h2 class="lock"><span class="b">ขอบเขตบทความ</span><span class="l">Call for Papers</span></h2><p class="desc muted">ประเด็นที่เปิดรับบทความ</p></div></div>
+    <div class="wrap"><div class="head split"><h2 class="lock"><span class="b" data-en="Call">ขอบเขตบทความ</span><span class="l" data-en="for Papers">Call for Papers</span></h2><p class="desc muted" data-en="Topics open for submission">ประเด็นที่เปิดรับบทความ</p></div></div>
     <div class="tiles">
-      <div class="tile b"><span class="num">A</span><h3>ศิลปกรรม ดนตรี นาฏศิลป์ และการแสดง</h3></div>
-      <div class="tile d"><span class="num">B</span><h3>ประวัติศาสตร์ โบราณคดี ภาษา และวรรณกรรม</h3></div>
-      <div class="tile m"><span class="num">C</span><h3>ภูมิปัญญาท้องถิ่น ชาติพันธุ์วิทยา และวัฒนธรรมศึกษา</h3></div>
-      <div class="tile g"><span class="num">D</span><h3>การสืบสาน ทำนุบำรุง และการต่อยอดเศรษฐกิจสร้างสรรค์ (Creative Economy) จากทุนทางวัฒนธรรม</h3></div>
+      <div class="tile b"><span class="num">A</span><h3 data-en="Fine Arts, Music, Dance and Performance">ศิลปกรรม ดนตรี นาฏศิลป์ และการแสดง</h3></div>
+      <div class="tile d"><span class="num">B</span><h3 data-en="History, Archaeology, Language and Literature">ประวัติศาสตร์ โบราณคดี ภาษา และวรรณกรรม</h3></div>
+      <div class="tile m"><span class="num">C</span><h3 data-en="Local Wisdom, Ethnology and Cultural Studies">ภูมิปัญญาท้องถิ่น ชาติพันธุ์วิทยา และวัฒนธรรมศึกษา</h3></div>
+      <div class="tile g"><span class="num">D</span><h3 data-en="Preserving cultural heritage and building a creative economy from cultural capital">การสืบสาน ทำนุบำรุง และการต่อยอดเศรษฐกิจสร้างสรรค์ (Creative Economy) จากทุนทางวัฒนธรรม</h3></div>
     </div>
   </section>
   <section class="band alt">
     <div class="wrap grid2">
-      <article class="card"><p class="eyebrow">Guidelines &amp; Templates</p><h3>เอกสารและเทมเพลต</h3><p class="muted">ดาวน์โหลดรูปแบบการจัดทำบทความและรูปแบบโปสเตอร์</p>
-        <div class="btns"><span data-link="articleTemplate">ดาวน์โหลดรูปแบบบทความวิชาการ (Word / PDF)</span><span data-link="posterTemplate">ดาวน์โหลดเทมเพลตโปสเตอร์ (Poster Template)</span></div></article>
-      <article class="card"><p class="eyebrow">Submission</p><h3>สมัครและส่งผลงาน</h3><p class="muted">กรอกข้อมูล อัปโหลดไฟล์บทความ และชำระเงินผ่าน Google Form</p>
-        <div class="btns"><span data-link="paperForm">ส่งบทความวิชาการผ่าน Google Form</span></div></article>
+      <article class="card"><p class="eyebrow">Guidelines &amp; Templates</p><h3 data-en="Documents &amp;amp; Templates">เอกสารและเทมเพลต</h3><p class="muted" data-en="Download the paper format and the poster template">ดาวน์โหลดรูปแบบการจัดทำบทความและรูปแบบโปสเตอร์</p>
+        <div class="btns"><span data-link="articleTemplate" data-en="Paper Template (Word / PDF)">ดาวน์โหลดรูปแบบบทความวิชาการ (Word / PDF)</span><span data-link="posterTemplate" data-en="Poster Template">ดาวน์โหลดเทมเพลตโปสเตอร์ (Poster Template)</span></div></article>
+      <article class="card"><p class="eyebrow">Submission</p><h3 data-en="Register &amp;amp; Submit">สมัครและส่งผลงาน</h3><p class="muted" data-en="Fill in your details, upload your paper and pay the fee through Google Form">กรอกข้อมูล อัปโหลดไฟล์บทความ และชำระเงินผ่าน Google Form</p>
+        <div class="btns"><span data-link="paperForm" data-en="Submit via Google Form">ส่งบทความวิชาการผ่าน Google Form</span></div></article>
     </div>
   </section>
   <section class="band" id="academic-list-anchor">
     <div class="wrap">
-      <div class="head split"><h2 class="lock"><span class="b">ประกาศรายชื่อ</span><span class="l">Accepted Papers</span></h2><p class="desc muted">ตรวจสอบรายชื่อผู้ผ่านการพิจารณาและมีสิทธิ์นำเสนอผลงานบทความวิชาการ แบบเรียลไทม์ผ่าน Looker Studio</p></div>
-      <div class="pending"><b>รายชื่อผู้มีสิทธิ์นำเสนอผลงาน</b><span class="muted">รายชื่อเปิดดูได้ใน Looker Studio (เปิดในแท็บใหม่)</span><span data-link="paperList">เปิดรายชื่อใน Looker Studio</span></div>
+      <div class="head split"><h2 class="lock"><span class="b" data-en="Accepted">ประกาศรายชื่อ</span><span class="l" data-en="Papers">Accepted Papers</span></h2><p class="desc muted" data-en="Check the live list of accepted papers and eligible presenters on Looker Studio">ตรวจสอบรายชื่อผู้ผ่านการพิจารณาและมีสิทธิ์นำเสนอผลงานบทความวิชาการ แบบเรียลไทม์ผ่าน Looker Studio</p></div>
+      <div class="pending"><b data-en="Eligible presenters">รายชื่อผู้มีสิทธิ์นำเสนอผลงาน</b><span class="muted" data-en="The list opens in Looker Studio (new tab)">รายชื่อเปิดดูได้ใน Looker Studio (เปิดในแท็บใหม่)</span><span data-link="paperList" data-en="Open list in Looker Studio">เปิดรายชื่อใน Looker Studio</span></div>
     </div>
   </section>
 </div>
@@ -436,32 +380,32 @@ footer nav a{color:#fff;font-size:14px}
 <div class="page" data-page="competitions" hidden>
   <section class="band blue"><span class="tri br"></span>
     <div class="wrap"><p class="eyebrow" style="color:var(--tan)">Cultural Competitions</p>
-      <h1 class="lock" style="margin-top:8px"><span class="b">การแข่งขันทักษะทางศิลปวัฒนธรรม</span><span class="l">งาน ICAC 2027</span></h1>
-      <p style="margin-top:16px;max-width:66ch;opacity:.92">เวทีแสดงออกถึงความภาคภูมิใจในเอกลักษณ์ไทยและการสืบสานภูมิปัญญา ผ่านการประกวดทักษะทางวัฒนธรรมสำหรับเยาวชนและนิสิตนักศึกษา</p>
+      <h1 class="lock" style="margin-top:8px"><span class="b" data-en="Cultural Skills Competitions">การแข่งขันทักษะทางศิลปวัฒนธรรม</span><span class="l" data-en="ICAC 2027">งาน ICAC 2027</span></h1>
+      <p style="margin-top:16px;max-width:66ch;opacity:.92" data-en="A stage for young people and university students to celebrate Thai identity and carry on traditional wisdom through cultural skills competitions.">เวทีแสดงออกถึงความภาคภูมิใจในเอกลักษณ์ไทยและการสืบสานภูมิปัญญา ผ่านการประกวดทักษะทางวัฒนธรรมสำหรับเยาวชนและนิสิตนักศึกษา</p>
     </div>
   </section>
   <section class="band alt">
     <div class="wrap">
       <article class="comp">
-        <div class="side" style="background:var(--ochre)"><span class="num">01</span><h3>การประกวดมารยาทไทย</h3><span>Thai Etiquette Competition · ระดับชาติ</span></div>
+        <div class="side" style="background:var(--ochre)"><span class="num">01</span><h3 data-en="Thai Etiquette Competition">การประกวดมารยาทไทย</h3><span data-en="Thai Etiquette Competition · National Level">Thai Etiquette Competition · ระดับชาติ</span></div>
         <div class="body">
           <div class="steps">
-            <div class="step"><h4>รายละเอียดการแข่งขัน</h4><ul class="list"><li>ขอบเขต รูปแบบ และขั้นตอนการปฏิบัติ เช่น การกราบ การไหว้ การนั่ง การยืน และการเดิน</li><li>คุณสมบัติของผู้เข้าแข่งขันและจำนวนสมาชิกในทีม</li></ul></div>
-            <div class="step"><h4>เอกสารและเกณฑ์การตัดสิน</h4><span data-link="etiquetteRules">ดาวน์โหลดเกณฑ์การให้คะแนน (PDF)</span></div>
-            <div class="step"><h4>สมัครเข้าประกวด</h4><span data-link="etiquetteForm">สมัครผ่าน Google Form</span></div>
+            <div class="step"><h4 data-en="Competition Details">รายละเอียดการแข่งขัน</h4><ul class="list"><li data-en="Scope, format and procedures, such as prostrating, the wai, sitting, standing and walking">ขอบเขต รูปแบบ และขั้นตอนการปฏิบัติ เช่น การกราบ การไหว้ การนั่ง การยืน และการเดิน</li><li data-en="Eligibility and number of team members">คุณสมบัติของผู้เข้าแข่งขันและจำนวนสมาชิกในทีม</li></ul></div>
+            <div class="step"><h4 data-en="Documents &amp;amp; Judging Criteria">เอกสารและเกณฑ์การตัดสิน</h4><span data-link="etiquetteRules" data-en="Scoring Criteria (PDF)">ดาวน์โหลดเกณฑ์การให้คะแนน (PDF)</span></div>
+            <div class="step"><h4 data-en="Register">สมัครเข้าประกวด</h4><span data-link="etiquetteForm" data-en="Register via Google Form">สมัครผ่าน Google Form</span></div>
           </div>
-          <div class="pending"><b>ประกาศรายชื่อผู้มีสิทธิ์เข้าแข่งขัน</b><span class="muted">รายชื่อผู้สมัครและผู้มีสิทธิ์แข่งขันประกวดมารยาทไทย ใน Looker Studio</span><span data-link="etiquetteList">เปิดรายชื่อใน Looker Studio</span></div>
+          <div class="pending"><b data-en="Eligible Competitors">ประกาศรายชื่อผู้มีสิทธิ์เข้าแข่งขัน</b><span class="muted" data-en="Applicants and eligible teams for the Thai Etiquette Competition, on Looker Studio">รายชื่อผู้สมัครและผู้มีสิทธิ์แข่งขันประกวดมารยาทไทย ใน Looker Studio</span><span data-link="etiquetteList" data-en="Open list in Looker Studio">เปิดรายชื่อใน Looker Studio</span></div>
         </div>
       </article>
       <article class="comp">
-        <div class="side" style="background:var(--brown)"><span class="num">02</span><h3>การประกวดการสวดมนต์หมู่ทำนองสรภัญญะ</h3><span>Chanting Competition</span></div>
+        <div class="side" style="background:var(--brown)"><span class="num">02</span><h3 data-en="Sarabhanya Group Chanting Competition">การประกวดการสวดมนต์หมู่ทำนองสรภัญญะ</h3><span>Chanting Competition</span></div>
         <div class="body">
           <div class="steps">
-            <div class="step"><h4>รายละเอียดการแข่งขัน</h4><ul class="list"><li>บทสวดบังคับและบทสวดสรรเสริญพระรัตนตรัยที่ใช้ในการประกวด</li><li>เกณฑ์จังหวะ ทำนอง และความพร้อมเพรียง</li></ul></div>
-            <div class="step"><h4>เอกสารและบทสวด</h4><span data-link="chantRules">ดาวน์โหลดคู่มือ บทสวด และเกณฑ์ (PDF)</span></div>
-            <div class="step"><h4>สมัครเข้าประกวด</h4><span data-link="chantForm">สมัครผ่าน Google Form</span></div>
+            <div class="step"><h4 data-en="Competition Details">รายละเอียดการแข่งขัน</h4><ul class="list"><li data-en="Required chants and chants in praise of the Triple Gem">บทสวดบังคับและบทสวดสรรเสริญพระรัตนตรัยที่ใช้ในการประกวด</li><li data-en="Judged on rhythm, melody and unison">เกณฑ์จังหวะ ทำนอง และความพร้อมเพรียง</li></ul></div>
+            <div class="step"><h4 data-en="Documents &amp;amp; Chants">เอกสารและบทสวด</h4><span data-link="chantRules" data-en="Handbook, Chants &amp;amp; Criteria (PDF)">ดาวน์โหลดคู่มือ บทสวด และเกณฑ์ (PDF)</span></div>
+            <div class="step"><h4 data-en="Register">สมัครเข้าประกวด</h4><span data-link="chantForm" data-en="Register via Google Form">สมัครผ่าน Google Form</span></div>
           </div>
-          <div class="pending"><b>ประกาศรายชื่อผู้มีสิทธิ์เข้าแข่งขัน</b><span class="muted">รายชื่อผู้สมัครและผู้มีสิทธิ์แข่งขันสวดมนต์หมู่ทำนองสรภัญญะ ใน Looker Studio</span><span data-link="chantList">เปิดรายชื่อใน Looker Studio</span></div>
+          <div class="pending"><b data-en="Eligible Competitors">ประกาศรายชื่อผู้มีสิทธิ์เข้าแข่งขัน</b><span class="muted" data-en="Applicants and eligible teams for the Group Chanting Competition, on Looker Studio">รายชื่อผู้สมัครและผู้มีสิทธิ์แข่งขันสวดมนต์หมู่ทำนองสรภัญญะ ใน Looker Studio</span><span data-link="chantList" data-en="Open list in Looker Studio">เปิดรายชื่อใน Looker Studio</span></div>
         </div>
       </article>
     </div>
@@ -472,21 +416,21 @@ footer nav a{color:#fff;font-size:14px}
 <div class="page" data-page="certificates" hidden>
   <section class="band blue"><span class="tri br"></span>
     <div class="wrap"><p class="eyebrow" style="color:var(--tan)">Certificate Download</p>
-      <h1 class="lock" style="margin-top:8px"><span class="b">ดาวน์โหลดเกียรติบัตร</span><span class="l">ระบบ KPRU</span></h1>
-      <p style="margin-top:16px;max-width:66ch;opacity:.92">ผู้เข้าร่วมงานประชุมวิชาการ ผู้นำเสนอผลงาน และผู้เข้าแข่งขันทักษะทางศิลปวัฒนธรรม งาน ICAC 2027 ค้นหาและดาวน์โหลดเกียรติบัตรผ่านระบบออนไลน์ของมหาวิทยาลัยราชภัฏกำแพงเพชร ตามหมวดหมู่ด้านล่าง</p>
+      <h1 class="lock" style="margin-top:8px"><span class="b" data-en="Download Certificates">ดาวน์โหลดเกียรติบัตร</span><span class="l" data-en="via the KPRU System">ระบบ KPRU</span></h1>
+      <p style="margin-top:16px;max-width:66ch;opacity:.92" data-en="Conference participants, presenters and competitors at ICAC 2027 can find and download their certificates from Kamphaeng Phet Rajabhat University&#x27;s online system, by category below.">ผู้เข้าร่วมงานประชุมวิชาการ ผู้นำเสนอผลงาน และผู้เข้าแข่งขันทักษะทางศิลปวัฒนธรรม งาน ICAC 2027 ค้นหาและดาวน์โหลดเกียรติบัตรผ่านระบบออนไลน์ของมหาวิทยาลัยราชภัฏกำแพงเพชร ตามหมวดหมู่ด้านล่าง</p>
     </div>
   </section>
   <section class="band alt">
     <div class="wrap">
       <div class="grid2">
-        <article class="cert" style="--c:var(--orange)"><span class="bar"></span><div class="in"><h3 style="font-size:19px">เกียรติบัตรการนำเสนอบทความวิชาการ (Poster Presentation)</h3><p class="muted">สำหรับผู้นำเสนอผลงานวิชาการและวิจัยรูปแบบโปสเตอร์</p><span data-link="certPoster">ไปยังระบบเกียรติบัตร KPRU</span></div></article>
-        <article class="cert" style="--c:var(--ochre)"><span class="bar"></span><div class="in"><h3 style="font-size:19px">เกียรติบัตรการประกวดมารยาทไทย</h3><p class="muted">สำหรับผู้เข้าร่วมการประกวดมารยาทไทยและอาจารย์ผู้ควบคุมทีม</p><span data-link="certEtiquette">ไปยังระบบเกียรติบัตร KPRU</span></div></article>
-        <article class="cert" style="--c:var(--brown)"><span class="bar"></span><div class="in"><h3 style="font-size:19px">เกียรติบัตรการประกวดการสวดมนต์หมู่ทำนองสรภัญญะ</h3><p class="muted">สำหรับผู้เข้าร่วมการประกวดสวดมนต์หมู่ฯ และอาจารย์ผู้ควบคุมทีม</p><span data-link="certChant">ไปยังระบบเกียรติบัตร KPRU</span></div></article>
-        <article class="cert" style="--c:var(--tan)"><span class="bar"></span><div class="in"><h3 style="font-size:19px">เกียรติบัตรผู้เข้าร่วมงานทั่วไป (General Participants)</h3><p class="muted">สำหรับผู้เข้าร่วมงาน คณาจารย์ และผู้สนใจทั่วไปที่ลงทะเบียนเข้าร่วมงาน</p><span data-link="certGeneral">ไปยังระบบเกียรติบัตร KPRU</span></div></article>
+        <article class="cert" style="--c:var(--orange)"><span class="bar"></span><div class="in"><h3 style="font-size:19px" data-en="Poster Presentation Certificates">เกียรติบัตรการนำเสนอบทความวิชาการ (Poster Presentation)</h3><p class="muted" data-en="For presenters of academic and research posters">สำหรับผู้นำเสนอผลงานวิชาการและวิจัยรูปแบบโปสเตอร์</p><span data-link="certPoster" data-en="Go to KPRU Certificate System">ไปยังระบบเกียรติบัตร KPRU</span></div></article>
+        <article class="cert" style="--c:var(--ochre)"><span class="bar"></span><div class="in"><h3 style="font-size:19px" data-en="Thai Etiquette Competition Certificates">เกียรติบัตรการประกวดมารยาทไทย</h3><p class="muted" data-en="For Thai Etiquette competitors and team advisors">สำหรับผู้เข้าร่วมการประกวดมารยาทไทยและอาจารย์ผู้ควบคุมทีม</p><span data-link="certEtiquette" data-en="Go to KPRU Certificate System">ไปยังระบบเกียรติบัตร KPRU</span></div></article>
+        <article class="cert" style="--c:var(--brown)"><span class="bar"></span><div class="in"><h3 style="font-size:19px" data-en="Group Chanting Competition Certificates">เกียรติบัตรการประกวดการสวดมนต์หมู่ทำนองสรภัญญะ</h3><p class="muted" data-en="For Group Chanting competitors and team advisors">สำหรับผู้เข้าร่วมการประกวดสวดมนต์หมู่ฯ และอาจารย์ผู้ควบคุมทีม</p><span data-link="certChant" data-en="Go to KPRU Certificate System">ไปยังระบบเกียรติบัตร KPRU</span></div></article>
+        <article class="cert" style="--c:var(--tan)"><span class="bar"></span><div class="in"><h3 style="font-size:19px" data-en="General Participant Certificates">เกียรติบัตรผู้เข้าร่วมงานทั่วไป (General Participants)</h3><p class="muted" data-en="For registered attendees, lecturers and members of the public">สำหรับผู้เข้าร่วมงาน คณาจารย์ และผู้สนใจทั่วไปที่ลงทะเบียนเข้าร่วมงาน</p><span data-link="certGeneral" data-en="Go to KPRU Certificate System">ไปยังระบบเกียรติบัตร KPRU</span></div></article>
       </div>
       <ul class="list tips muted" style="margin-top:32px">
-        <li>กรุณากรอกเลขประจำตัวประชาชน หรือชื่อ-นามสกุลจริง เพื่อค้นหาเกียรติบัตรของท่านในระบบ KPRU</li>
-        <li>หากพบปัญหาในการดาวน์โหลดเกียรติบัตร ติดต่อทีมงานได้ที่หน้า <a href="#contact">ติดต่อเรา</a></li>
+        <li data-en="Search the KPRU system with your national ID number or your full name">กรุณากรอกเลขประจำตัวประชาชน หรือชื่อ-นามสกุลจริง เพื่อค้นหาเกียรติบัตรของท่านในระบบ KPRU</li>
+        <li data-en="Having trouble downloading a certificate? &lt;a href=&quot;#contact&quot;&gt;Contact us&lt;/a&gt;">หากพบปัญหาในการดาวน์โหลดเกียรติบัตร ติดต่อทีมงานได้ที่หน้า <a href="#contact" data-en="Contact Us">ติดต่อเรา</a></li>
       </ul>
     </div>
   </section>
@@ -496,38 +440,38 @@ footer nav a{color:#fff;font-size:14px}
 <div class="page" data-page="schedule" hidden>
   <section class="band blue"><span class="tri br"></span>
     <div class="wrap"><p class="eyebrow" style="color:var(--tan)">Schedule &amp; Venue</p>
-      <h1 class="lock" style="margin-top:8px"><span class="b">กำหนดการและสถานที่</span><span class="l">ICAC 2027</span></h1>
-      <p style="margin-top:16px;max-width:66ch;opacity:.92">กำหนดการเบื้องต้นของงาน ระหว่างวันที่ 24–26 กุมภาพันธ์ 2570 (อาจมีการปรับเปลี่ยนตามความเหมาะสม)</p>
+      <h1 class="lock" style="margin-top:8px"><span class="b" data-en="Schedule &amp;amp; Venue">กำหนดการและสถานที่</span><span class="l">ICAC 2027</span></h1>
+      <p style="margin-top:16px;max-width:66ch;opacity:.92" data-en="Preliminary programme, 24–26 February 2027 (subject to change)">กำหนดการเบื้องต้นของงาน ระหว่างวันที่ 24–26 กุมภาพันธ์ 2570 (อาจมีการปรับเปลี่ยนตามความเหมาะสม)</p>
     </div>
   </section>
   <section class="band">
     <div class="wrap">
       <div class="day">
-        <div class="label"><b>วันที่ 1</b><span>วันแรกของการจัดงาน</span></div>
+        <div class="label"><b data-en="Day 1">วันที่ 1</b><span data-en="Opening day">วันแรกของการจัดงาน</span></div>
         <ul class="slots">
-          <li><time>08:30–09:30 น.</time><span>ลงทะเบียนผู้เข้าร่วมงาน / เยี่ยมชมนิทรรศการ</span></li>
-          <li><time>09:30–10:30 น.</time><span>พิธีเปิดงานประชุมวิชาการระดับชาติและนานาชาติ ครั้งที่ 16 (ICAC 2027) โดยอธิการบดี / ประธานในพิธี</span></li>
-          <li><time>10:30–12:00 น.</time><span>การบรรยายพิเศษ (Keynote Speech) จากผู้ทรงคุณวุฒิ</span></li>
-          <li><time>13:00–16:00 น.</time><span>การนำเสนอผลงานวิชาการรูปแบบโปสเตอร์ (Poster Presentation) และการแข่งขันทักษะทางศิลปวัฒนธรรม (รอบคัดเลือก / รอบชิงชนะเลิศ)</span></li>
+          <li><time data-en="08:30–09:30">08:30–09:30 น.</time><span data-en="Registration / exhibition visit">ลงทะเบียนผู้เข้าร่วมงาน / เยี่ยมชมนิทรรศการ</span></li>
+          <li><time data-en="09:30–10:30">09:30–10:30 น.</time><span data-en="Opening ceremony of ICAC 2027 by the University President / guest of honour">พิธีเปิดงานประชุมวิชาการระดับชาติและนานาชาติ ครั้งที่ 16 (ICAC 2027) โดยอธิการบดี / ประธานในพิธี</span></li>
+          <li><time data-en="10:30–12:00">10:30–12:00 น.</time><span data-en="Keynote speech by a distinguished expert">การบรรยายพิเศษ (Keynote Speech) จากผู้ทรงคุณวุฒิ</span></li>
+          <li><time data-en="13:00–16:00">13:00–16:00 น.</time><span data-en="Poster presentations and cultural skills competitions (preliminary / final rounds)">การนำเสนอผลงานวิชาการรูปแบบโปสเตอร์ (Poster Presentation) และการแข่งขันทักษะทางศิลปวัฒนธรรม (รอบคัดเลือก / รอบชิงชนะเลิศ)</span></li>
         </ul>
       </div>
       <div class="day">
-        <div class="label"><b>วันที่ 2</b><span>วันที่สอง</span></div>
+        <div class="label"><b data-en="Day 2">วันที่ 2</b><span data-en="Second day">วันที่สอง</span></div>
         <ul class="slots">
-          <li><time>09:00–12:00 น.</time><span>กิจกรรมเสวนาทางวิชาการ / การแสดงศิลปวัฒนธรรมแลกเปลี่ยน</span></li>
-          <li><time>13:00–15:00 น.</time><span>พิธีมอบรางวัลแก่ผู้ชนะการแข่งขันและผู้นำเสนอผลงาน / พิธีปิดงาน</span></li>
+          <li><time data-en="09:00–12:00">09:00–12:00 น.</time><span data-en="Academic panel discussion / cultural exchange performances">กิจกรรมเสวนาทางวิชาการ / การแสดงศิลปวัฒนธรรมแลกเปลี่ยน</span></li>
+          <li><time data-en="13:00–15:00">13:00–15:00 น.</time><span data-en="Award ceremony for competition winners and presenters / closing ceremony">พิธีมอบรางวัลแก่ผู้ชนะการแข่งขันและผู้นำเสนอผลงาน / พิธีปิดงาน</span></li>
         </ul>
       </div>
     </div>
   </section>
   <section class="band alt">
     <div class="wrap">
-      <div class="head"><h2 class="lock"><span class="b">สถานที่จัดงาน</span><span class="l">Venue</span></h2></div>
+      <div class="head"><h2 class="lock"><span class="b" data-en="Venue">สถานที่จัดงาน</span><span class="l" data-en="">Venue</span></h2></div>
       <div class="grid3">
-        <article class="card"><p class="eyebrow">สถานที่</p><h3>มหาวิทยาลัยราชภัฏกำแพงเพชร</h3><p class="muted">Kamphaeng Phet Rajabhat University (KPRU)<br>หอประชุมทีปังกรรัศมีโชติ</p><p>เลขที่ 69 ถนนนครชุม อำเภอเมือง จังหวัดกำแพงเพชร 62000</p>
-          <div class="btns"><a class="btn" href="https://www.google.com/maps/search/?api=1&amp;query=%E0%B8%A1%E0%B8%AB%E0%B8%B2%E0%B8%A7%E0%B8%B4%E0%B8%97%E0%B8%A2%E0%B8%B2%E0%B8%A5%E0%B8%B1%E0%B8%A2%E0%B8%A3%E0%B8%B2%E0%B8%8A%E0%B8%A0%E0%B8%B1%E0%B8%8F%E0%B8%81%E0%B8%B3%E0%B9%81%E0%B8%9E%E0%B8%87%E0%B9%80%E0%B8%9E%E0%B8%8A%E0%B8%A3" target="_blank" rel="noopener">เปิดแผนที่ Google Maps</a></div></article>
-        <article class="card"><p class="eyebrow">การเดินทาง</p><h3>Map &amp; Directions</h3><p class="muted">ข้อมูลการเดินทางจากสถานีขนส่ง / สนามบินใกล้เคียง และเส้นทางขับรถยนต์ส่วนตัวมายังมหาวิทยาลัย จะประกาศเร็วๆ นี้</p></article>
-        <article class="card"><p class="eyebrow">ที่พัก</p><h3>โรงแรมและที่พักแนะนำ</h3><p class="muted">รายชื่อโรงแรมพันธมิตรและโรงแรมใกล้มหาวิทยาลัย พร้อมเบอร์โทรศัพท์ติดต่อ สำหรับผู้เดินทางจากต่างจังหวัดและต่างประเทศ จะประกาศเร็วๆ นี้</p></article>
+        <article class="card"><p class="eyebrow" data-en="Venue">สถานที่</p><h3 data-en="Kamphaeng Phet Rajabhat University">มหาวิทยาลัยราชภัฏกำแพงเพชร</h3><p class="muted" data-en="KPRU&lt;br&gt;Thipangkorn Rasmichot Auditorium">Kamphaeng Phet Rajabhat University (KPRU)<br>หอประชุมทีปังกรรัศมีโชติ</p><p data-en="69 Nakhon Chum Road, Mueang District, Kamphaeng Phet 62000, Thailand">เลขที่ 69 ถนนนครชุม อำเภอเมือง จังหวัดกำแพงเพชร 62000</p>
+          <div class="btns"><a class="btn" href="https://www.google.com/maps/search/?api=1&amp;query=%E0%B8%A1%E0%B8%AB%E0%B8%B2%E0%B8%A7%E0%B8%B4%E0%B8%97%E0%B8%A2%E0%B8%B2%E0%B8%A5%E0%B8%B1%E0%B8%A2%E0%B8%A3%E0%B8%B2%E0%B8%8A%E0%B8%A0%E0%B8%B1%E0%B8%8F%E0%B8%81%E0%B8%B3%E0%B9%81%E0%B8%9E%E0%B8%87%E0%B9%80%E0%B8%9E%E0%B8%8A%E0%B8%A3" target="_blank" rel="noopener" data-en="Open in Google Maps">เปิดแผนที่ Google Maps</a></div></article>
+        <article class="card"><p class="eyebrow" data-en="Getting There">การเดินทาง</p><h3>Map &amp; Directions</h3><p class="muted" data-en="Directions from the bus terminal, nearby airports and by car will be announced soon.">ข้อมูลการเดินทางจากสถานีขนส่ง / สนามบินใกล้เคียง และเส้นทางขับรถยนต์ส่วนตัวมายังมหาวิทยาลัย จะประกาศเร็วๆ นี้</p></article>
+        <article class="card"><p class="eyebrow" data-en="Accommodation">ที่พัก</p><h3 data-en="Recommended Hotels">โรงแรมและที่พักแนะนำ</h3><p class="muted" data-en="A list of partner hotels and hotels near the university, with phone numbers, will be announced soon.">รายชื่อโรงแรมพันธมิตรและโรงแรมใกล้มหาวิทยาลัย พร้อมเบอร์โทรศัพท์ติดต่อ สำหรับผู้เดินทางจากต่างจังหวัดและต่างประเทศ จะประกาศเร็วๆ นี้</p></article>
       </div>
     </div>
   </section>
@@ -537,18 +481,18 @@ footer nav a{color:#fff;font-size:14px}
 <div class="page" data-page="contact" hidden>
   <section class="band blue"><span class="tri br"></span>
     <div class="wrap"><p class="eyebrow" style="color:var(--tan)">Contact Us</p>
-      <h1 class="lock" style="margin-top:8px"><span class="b">ติดต่อเรา</span><span class="l">คณะทำงาน ICAC 2027</span></h1>
-      <p style="margin-top:16px;max-width:66ch;opacity:.92">หากมีข้อสงสัยเกี่ยวกับการส่งบทความวิชาการ การสมัครแข่งขันทักษะทางศิลปวัฒนธรรม หรือปัญหาการใช้งานระบบ ติดต่อคณะทำงานได้ตามช่องทางด้านล่าง</p>
+      <h1 class="lock" style="margin-top:8px"><span class="b" data-en="Contact Us">ติดต่อเรา</span><span class="l" data-en="ICAC 2027 Team">คณะทำงาน ICAC 2027</span></h1>
+      <p style="margin-top:16px;max-width:66ch;opacity:.92" data-en="For questions about paper submission, competition registration or the website, contact the team below.">หากมีข้อสงสัยเกี่ยวกับการส่งบทความวิชาการ การสมัครแข่งขันทักษะทางศิลปวัฒนธรรม หรือปัญหาการใช้งานระบบ ติดต่อคณะทำงานได้ตามช่องทางด้านล่าง</p>
     </div>
   </section>
   <section class="band alt">
     <div class="wrap">
       <div class="grid2" style="margin-bottom:24px">
-        <article class="card"><p class="eyebrow">Host Organization</p><h3>เครือข่ายศิลปวัฒนธรรมมหาวิทยาลัยแห่งประเทศไทย และมหาวิทยาลัยราชภัฏกำแพงเพชร (KPRU)</h3><p>เลขที่ 69 ถนนนครชุม อำเภอเมือง จังหวัดกำแพงเพชร 62000</p></article>
+        <article class="card"><p class="eyebrow">Host Organization</p><h3 data-en="Arts and Culture Network of Thai Universities and Kamphaeng Phet Rajabhat University (KPRU)">เครือข่ายศิลปวัฒนธรรมมหาวิทยาลัยแห่งประเทศไทย และมหาวิทยาลัยราชภัฏกำแพงเพชร (KPRU)</h3><p data-en="69 Nakhon Chum Road, Mueang District, Kamphaeng Phet 62000, Thailand">เลขที่ 69 ถนนนครชุม อำเภอเมือง จังหวัดกำแพงเพชร 62000</p></article>
         <article class="card"><p class="eyebrow">Social Media &amp; Location</p>
-          <dl class="kv"><dt>โทรศัพท์กลาง</dt><dd>055-706-555 <span class="tba">(เบอร์ต่อรอประกาศ)</span></dd><dt>LINE OA</dt><dd class="tba">รอประกาศ</dd><dt>Facebook</dt><dd class="tba">รอประกาศ</dd><dt>แผนที่</dt><dd><a href="#schedule">ดูหน้ากำหนดการและสถานที่</a></dd></dl></article>
+          <dl class="kv"><dt data-en="Main phone">โทรศัพท์กลาง</dt><dd>055-706-555 <span class="tba" data-en="(extension to be announced)">(เบอร์ต่อรอประกาศ)</span></dd><dt>LINE OA</dt><dd class="tba" data-en="To be announced">รอประกาศ</dd><dt>Facebook</dt><dd class="tba" data-en="To be announced">รอประกาศ</dd><dt data-en="Map">แผนที่</dt><dd><a href="#schedule" data-en="See Schedule &amp;amp; Venue">ดูหน้ากำหนดการและสถานที่</a></dd></dl></article>
       </div>
-      <div class="head"><h2 class="lock"><span class="b">ช่องทางติดต่อแยกตามฝ่าย</span><span class="l">Department Contacts</span></h2></div>
+      <div class="head"><h2 class="lock"><span class="b" data-en="Contacts">ช่องทางติดต่อแยกตามฝ่าย</span><span class="l" data-en="by Department">Department Contacts</span></h2></div>
       <div class="grid2" id="contacts"></div>
     </div>
   </section>
@@ -558,7 +502,7 @@ footer nav a{color:#fff;font-size:14px}
 <footer>
   <span class="pin"></span>
   <div class="wrap">
-    <div><b style="font-size:22px">ICAC 2027</b><p class="small" style="margin-top:8px">The 16th International Conference on Arts and Culture · 24–26 กุมภาพันธ์ 2570<br>หอประชุมทีปังกรรัศมีโชติ มหาวิทยาลัยราชภัฏกำแพงเพชร</p></div>
+    <div><b style="font-size:22px">ICAC 2027</b><p class="small" style="margin-top:8px" data-en="The 16th International Conference on Arts and Culture · 24–26 February 2027&lt;br&gt;Thipangkorn Rasmichot Auditorium, Kamphaeng Phet Rajabhat University">The 16th International Conference on Arts and Culture · 24–26 กุมภาพันธ์ 2570<br>หอประชุมทีปังกรรัศมีโชติ มหาวิทยาลัยราชภัฏกำแพงเพชร</p></div>
     <nav aria-label="เมนูท้ายหน้า" id="fnav"></nav>
   </div>
 </footer>
@@ -572,52 +516,113 @@ const LINKS = {
   certPoster:"", certEtiquette:"", certChant:"", certGeneral:""
 };
 
-const NEWS = []; /* {date:"…", title:"…", url:"…"} */
+/* ข่าว: {date:"…", title:"…", title_en:"…", url:"…"} */
+const NEWS = [];
 const CONTACTS = [
-  {c:"var(--orange)",t:"ฝ่ายประสานงานบทความวิชาการ (Poster Presentation)",p:"อาจารย์ ดร.ธัญรดี บุญปัน",e:"icac2027.academic@kpru.ac.th"},
-  {c:"var(--ochre)",t:"ฝ่ายประสานงานการแข่งขัน (มารยาทไทย)",p:"คุณสุวลัย อินทรรัตน์",e:"icac2027.culture@kpru.ac.th"},
-  {c:"var(--brown)",t:"ฝ่ายประสานงานการแข่งขัน (สวดมนต์หมู่ฯ)",p:"คุณจันทนา คุ้มกล่ำ",e:"icac2027.culture@kpru.ac.th"},
-  {c:"var(--tan)",t:"ฝ่ายเทคโนโลยีและระบบเว็บไซต์",p:"อาจารย์ ดร.พิมพ์นารา บรรจง และคุณจีรวรรณ ผึ่งบางแก้ว",e:"icac2027.it@kpru.ac.th"}
+  {c:"var(--orange)",t:"ฝ่ายประสานงานบทความวิชาการ (Poster Presentation)",t_en:"Academic Papers (Poster Presentation)",p:"อาจารย์ ดร.ธัญรดี บุญปัน",e:"icac2027.academic@kpru.ac.th"},
+  {c:"var(--ochre)",t:"ฝ่ายประสานงานการแข่งขัน (มารยาทไทย)",t_en:"Competitions (Thai Etiquette)",p:"คุณสุวลัย อินทรรัตน์",e:"icac2027.culture@kpru.ac.th"},
+  {c:"var(--brown)",t:"ฝ่ายประสานงานการแข่งขัน (สวดมนต์หมู่ฯ)",t_en:"Competitions (Group Chanting)",p:"คุณจันทนา คุ้มกล่ำ",e:"icac2027.culture@kpru.ac.th"},
+  {c:"var(--tan)",t:"ฝ่ายเทคโนโลยีและระบบเว็บไซต์",t_en:"Technology &amp; Website",p:"อาจารย์ ดร.พิมพ์นารา บรรจง และคุณจีรวรรณ ผึ่งบางแก้ว",e:"icac2027.it@kpru.ac.th"}
 ];
-const PAGES = [["home","หน้าแรก"],["about","เกี่ยวกับงาน"],["academic","การประชุมวิชาการ"],["competitions","การแข่งขัน"],["certificates","เกียรติบัตร"],["schedule","กำหนดการและสถานที่"],["contact","ติดต่อเรา"]];
+const PAGES = [["home","หน้าแรก","Home"],["about","เกี่ยวกับงาน","About"],["academic","การประชุมวิชาการ","Academic Conference"],["competitions","การแข่งขัน","Competitions"],["certificates","เกียรติบัตร","Certificates"],["schedule","กำหนดการและสถานที่","Schedule &amp; Venue"],["contact","ติดต่อเรา","Contact"]];
+const UI = {
+  th:{title:"ICAC 2027 · งานประชุมวิชาการนานาชาติ ครั้งที่ 16",soon:"เปิดให้ใช้งานเร็วๆ นี้",noNews:"ยังไม่มีประกาศใหม่",noNewsSub:"ข่าวสารและประกาศจากผู้จัดจะแสดงที่นี่ เช่น การขยายเวลาส่งบทความ",
+      coord:"ผู้ประสานงาน",email:"อีเมล",phone:"โทรศัพท์",tba:"รอประกาศ",copy:"คัดลอก",copied:"คัดลอกแล้ว",pause:"หยุด",play:"เล่นต่อ",
+      nav:"เมนูหลัก",fnav:"เมนูท้ายหน้า",car:"แบนเนอร์ประชาสัมพันธ์",prev:"แบนเนอร์ก่อนหน้า",next:"แบนเนอร์ถัดไป",pick:"เลือกแบนเนอร์",of:"จาก",
+      langBtn:"EN",langAria:"Switch to English",
+      slides:["การจัดงาน ICAC 2027 วันที่ 24–26 กุมภาพันธ์ 2570 ณ มหาวิทยาลัยราชภัฏกำแพงเพชร","เชิญชวนส่งบทความวิชาการ นำเสนอแบบโปสเตอร์","เชิญชวนร่วมประกวดมารยาทไทย ระดับชาติ","เชิญชวนร่วมประกวดสวดมนต์หมู่ทำนองสรภัญญะ"],
+      dots:["การจัดงาน","ส่งบทความ","ประกวดมารยาทไทย","ประกวดสวดมนต์หมู่"]},
+  en:{title:"ICAC 2027 · The 16th International Conference on Arts and Culture",soon:"Coming soon",noNews:"No announcements yet",noNewsSub:"News and notices from the organisers will appear here, such as deadline extensions.",
+      coord:"Coordinator",email:"Email",phone:"Phone",tba:"To be announced",copy:"Copy",copied:"Copied",pause:"Pause",play:"Play",
+      nav:"Main menu",fnav:"Footer menu",car:"Announcement banners",prev:"Previous banner",next:"Next banner",pick:"Choose a banner",of:"of",
+      langBtn:"ไทย",langAria:"เปลี่ยนเป็นภาษาไทย",
+      slides:["ICAC 2027, 24–26 February 2027 at Kamphaeng Phet Rajabhat University","Call for papers: poster presentation","Join the national Thai Etiquette Competition","Join the Sarabhanya Group Chanting Competition"],
+      dots:["Conference","Call for papers","Thai etiquette","Group chanting"]}
+};
+let LANG="th";
+try{const v=localStorage.getItem("icac-lang");if(v==="en"||v==="th")LANG=v;}catch(_){}
+const u=k=>UI[LANG][k];
 
 const $=s=>document.querySelector(s);
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
-const navHTML=PAGES.map(([id,l])=>`<a href="#${id}" data-to="${id}">${l}</a>`).join("");
-$("#nav").innerHTML=navHTML; $("#drawer").innerHTML=navHTML; $("#fnav").innerHTML=navHTML;
 
+/* data-link spans → buttons (label kept in both languages) */
 document.querySelectorAll("[data-link]").forEach(el=>{
-  const url=LINKS[el.dataset.link], label=el.textContent;
+  const url=LINKS[el.dataset.link];
   const a=document.createElement("a"); a.className="btn"+(el.closest(".band.blue,.band.dark")?" light":"");
-  if(url){a.href=url;a.target="_blank";a.rel="noopener";a.textContent=label;}
-  else{a.setAttribute("aria-disabled","true");a.setAttribute("role","link");a.innerHTML=`<span>${esc(label)}<span class="soon">เปิดให้ใช้งานเร็วๆ นี้</span></span>`;}
+  a.dataset.lth=el.innerHTML; a.dataset.len=el.dataset.en||el.innerHTML;
+  if(url){a.href=url;a.target="_blank";a.rel="noopener";} else {a.setAttribute("aria-disabled","true");a.setAttribute("role","link");}
   el.replaceWith(a);
 });
 
-$("#news").innerHTML=NEWS.length?NEWS.map(n=>`<a class="card" href="${esc(n.url)}" target="_blank" rel="noopener"><span class="muted">${esc(n.date)}</span><h3>${esc(n.title)}</h3></a>`).join(""):
- `<div class="empty"><svg viewBox="0 0 24 24"><path d="M4 5h16v11H8l-4 4z"/></svg><div><b>ยังไม่มีประกาศใหม่</b><p class="muted">ข่าวสารและประกาศจากผู้จัดจะแสดงที่นี่ เช่น การขยายเวลาส่งบทความ</p></div></div>`;
-$("#contacts").innerHTML=CONTACTS.map(x=>`<article class="contact" style="--c:${x.c}"><h3>${x.t}</h3><dl class="kv"><dt>ผู้ประสานงาน</dt><dd>${x.p}</dd><dt>อีเมล</dt><dd><span class="em">${x.e}</span><button class="copy" type="button" data-copy="${x.e}">คัดลอก</button></dd><dt>โทรศัพท์</dt><dd class="tba">รอประกาศ</dd></dl></article>`).join("");
+function render(){
+  const en=LANG==="en";
+  document.documentElement.lang=LANG; document.title=u("title");
+  document.querySelectorAll("[data-en]").forEach(el=>{
+    if(el.dataset.th===undefined) el.dataset.th=el.innerHTML;
+    el.innerHTML=en?el.dataset.en:el.dataset.th;
+  });
+  document.querySelectorAll("a[data-lth]").forEach(a=>{
+    const l=en?a.dataset.len:a.dataset.lth;
+    a.innerHTML=a.hasAttribute("aria-disabled")?`<span>${l}<span class="soon">${u("soon")}</span></span>`:l;
+  });
+  const navHTML=PAGES.map(([id,th,e])=>`<a href="#${id}" data-to="${id}">${en?e:th}</a>`).join("");
+  $("#nav").innerHTML=navHTML; $("#drawer").innerHTML=navHTML; $("#fnav").innerHTML=navHTML;
+  $("#nav").setAttribute("aria-label",u("nav")); $("#fnav").setAttribute("aria-label",u("fnav"));
+  $("#news").innerHTML=NEWS.length?NEWS.map(n=>`<a class="card" href="${esc(n.url)}" target="_blank" rel="noopener"><span class="muted">${esc(n.date)}</span><h3>${esc(en&&n.title_en?n.title_en:n.title)}</h3></a>`).join(""):
+    `<div class="empty"><svg viewBox="0 0 24 24"><path d="M4 5h16v11H8l-4 4z"/></svg><div><b>${u("noNews")}</b><p class="muted">${u("noNewsSub")}</p></div></div>`;
+  $("#contacts").innerHTML=CONTACTS.map(x=>`<article class="contact" style="--c:${x.c}"><h3>${en?x.t_en:x.t}</h3><dl class="kv"><dt>${u("coord")}</dt><dd lang="th">${x.p}</dd><dt>${u("email")}</dt><dd><span class="em">${x.e}</span><button class="copy" type="button" data-copy="${x.e}">${u("copy")}</button></dd><dt>${u("phone")}</dt><dd class="tba">${u("tba")}</dd></dl></article>`).join("");
+  const car=$(".hero-car"); car.setAttribute("aria-label",u("car"));
+  $("#carPrev").setAttribute("aria-label",u("prev")); $("#carNext").setAttribute("aria-label",u("next"));
+  $(".dots").setAttribute("aria-label",u("pick"));
+  document.querySelectorAll(".dots button").forEach((d,k)=>d.setAttribute("aria-label",u("dots")[k]));
+  document.querySelectorAll(".slide").forEach((sl,k)=>{sl.setAttribute("aria-label",`${k+1} ${u("of")} 4: ${u("slides")[k]}`);sl.dataset.alt=u("slides")[k];});
+  const lb=$("#langBtn"); lb.textContent=u("langBtn"); lb.setAttribute("aria-label",u("langAria")); lb.setAttribute("lang",en?"th":"en");
+  if(window.__setPauseLabel) window.__setPauseLabel();
+  loadBanners();
+  markNav();
+}
+function setLang(l){LANG=l;try{localStorage.setItem("icac-lang",l);}catch(_){}render();}
+$("#langBtn").addEventListener("click",()=>setLang(LANG==="th"?"en":"th"));
+
 document.addEventListener("click",e=>{
   const b=e.target.closest("[data-copy]"); if(b){
-    const done=()=>{b.textContent="คัดลอกแล้ว";setTimeout(()=>b.textContent="คัดลอก",1600)};
+    const done=()=>{b.textContent=u("copied");setTimeout(()=>b.textContent=u("copy"),1600)};
     try{navigator.clipboard.writeText(b.dataset.copy).then(done,()=>{const r=document.createRange();r.selectNodeContents(b.previousElementSibling);getSelection().removeAllRanges();getSelection().addRange(r);});}catch(_){}
   }
   if(e.target.closest('[aria-disabled="true"]')) e.preventDefault();
 });
 
 /* router */
+let CUR="home";
+function markNav(){document.querySelectorAll("[data-to]").forEach(a=>a.dataset.to===CUR?a.setAttribute("aria-current","page"):a.removeAttribute("aria-current"));}
 function show(){
   let h=(location.hash||"#home").slice(1), anchor=null;
   if(h==="academic-list"){h="academic";anchor="academic-list-anchor";}
+  if(h==="home-news"){h="home";anchor="home-news-anchor";}
   if(!PAGES.some(p=>p[0]===h)) h="home";
   document.querySelectorAll(".page").forEach(p=>p.hidden=p.dataset.page!==h);
-  document.querySelectorAll("[data-to]").forEach(a=>a.dataset.to===h?a.setAttribute("aria-current","page"):a.removeAttribute("aria-current"));
+  CUR=h; markNav();
   $("#drawer").hidden=true; $("#menuBtn").setAttribute("aria-expanded","false");
   if(anchor){document.getElementById(anchor).scrollIntoView();} else window.scrollTo(0,0);
 }
-addEventListener("hashchange",show); show();
+addEventListener("hashchange",show);
 $("#menuBtn").addEventListener("click",()=>{const d=$("#drawer");d.hidden=!d.hidden;$("#menuBtn").setAttribute("aria-expanded",String(!d.hidden));});
 
+
+
+/* banner images (1170 × 500 px): images/banner-N.jpg (Thai); English mode tries images/banner-N-en.jpg first */
+function loadBanners(){
+  document.querySelectorAll(".slide").forEach((sl,k)=>{
+    const exts=["jpg","webp","png","jpeg"], base=`images/banner-${k+1}`;
+    const tries=(LANG==="en"?exts.map(x=>`${base}-en.${x}`):[]).concat(exts.map(x=>`${base}.${x}`));
+    const want=LANG;
+    (function next(n){if(n>=tries.length){sl.querySelector("img")?.remove();sl.classList.remove("has-img");return;}
+      const im=new Image();
+      im.onload=()=>{if(want!==LANG)return;sl.querySelector("img")?.remove();im.alt=sl.dataset.alt;im.width=1170;im.height=500;sl.prepend(im);sl.classList.add("has-img");};
+      im.onerror=()=>next(n+1);im.src=tries[n];})(0);
+  });
+}
 
 /* hero carousel: auto-rotates every 7 s, pauses on hover/focus or via the button */
 (function(){
@@ -632,7 +637,8 @@ $("#menuBtn").addEventListener("click",()=>{const d=$("#drawer");d.hidden=!d.hid
   $("#carPrev").addEventListener("click",()=>{go(i-1);run();});
   $("#carNext").addEventListener("click",()=>{go(i+1);run();});
   const pb=$("#carPause");
-  function setP(v){paused=v;pb.textContent=v?"เล่นต่อ":"หยุด";pb.setAttribute("aria-pressed",String(v));run();}
+  function setP(v){paused=v;pb.textContent=v?u("play"):u("pause");pb.setAttribute("aria-pressed",String(v));run();}
+  window.__setPauseLabel=()=>{pb.textContent=paused?u("play"):u("pause");};
   pb.addEventListener("click",()=>setP(!paused));
   car.addEventListener("mouseenter",()=>{hover=true;run();});car.addEventListener("mouseleave",()=>{hover=false;run();});
   car.addEventListener("focusin",()=>{hover=true;run();});car.addEventListener("focusout",()=>{hover=false;run();});
@@ -640,6 +646,8 @@ $("#menuBtn").addEventListener("click",()=>{const d=$("#drawer");d.hidden=!d.hid
   car.addEventListener("touchend",e=>{if(x0==null)return;const dx=e.changedTouches[0].clientX-x0;if(Math.abs(dx)>40){go(i+(dx<0?1:-1));run();}x0=null;});
   go(0);setP(reduce);
 })();
+
+render(); show();
 
 /* countdown: 24 Feb 2027 08:30 Asia/Bangkok */
 const START=Date.parse("2027-02-24T08:30:00+07:00");
